@@ -1,0 +1,85 @@
+﻿
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
+        <div class="well text-center">
+            <div class="panel-heading">
+                <h2>Informe por Oferta</h2>
+
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li class="active">
+                        <a href="#tab1" data-toggle="tab">Descargar  PDF</a>
+                    </li>
+                    <li>
+                        <a href="#tab2" data-toggle="tab">Descargar Excel</a>
+                    </li>
+
+
+                </ul>
+
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tab1">
+
+                        @using (Html.BeginForm("descarga_informe_pdf", "control_informes", FormMethod.Post, new { @id = "my-form" }))
+                        {
+                      
+
+
+                          
+                            <ul class="list-group">
+
+                             
+
+                                <li class="list-group-item">
+                                    <p>
+                                        Seleccione la oferta:
+                                    </p>
+                                  
+                                </li>
+                                <li class="list-group-item">
+                                    @Html.DropDownList("id_oferta", (IEnumerable<SelectListItem>)ViewBag.id_oferta, "Seleccione...", new { @class = "form-control" })
+                                </li>
+                                <li class="list-group-item">
+                                    <input type="submit" value="Decargar PDF" class="btn  btn-lg btn-block btn-info" />
+                                </li>
+                            </ul>
+                        }
+                    </div>
+
+
+
+                    <div class="tab-pane fade " id="tab2">
+                        @using (Html.BeginForm("ExportData", "control_informes", FormMethod.Post, new { @id = "my-form2" }))
+                        {
+                         
+
+          
+                            <ul class="list-group">
+
+                                <li class="list-group-item">
+                                    <p> Seleccione Oferta:</p>
+                                 
+                                </li>
+                                <li class="list-group-item">
+                                    @Html.DropDownList("id_oferta", (IEnumerable<SelectListItem>)ViewBag.id_oferta, "Seleccione...", new { @class = "form-control" })
+
+                                </li>
+                                <li class="list-group-item">
+                                    <input type="submit" value="Descargar EXCEL" class="btn btn-lg  btn-block btn-info" />
+                                </li>
+                            </ul>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

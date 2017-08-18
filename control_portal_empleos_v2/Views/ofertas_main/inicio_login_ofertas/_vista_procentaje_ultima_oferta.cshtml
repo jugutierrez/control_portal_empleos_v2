@@ -1,0 +1,68 @@
+﻿<div class="col-md-6">
+    <div class="well">
+
+        <blockquote class="lead">
+            <p>Porcentaje ultima oferta Creada</p>
+            <p>Nombre oferta: @ViewBag.nombre_oferta</p>
+        </blockquote>
+
+        <div id="chartdiv" class="img-responsive"></div>
+
+
+
+
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    google.charts.load("visualization", "1", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawVisualization);
+
+
+      function drawVisualization() {
+
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '/control_informes/postulados_por_oferta_ultima',
+            data: '{id_usuario : @ViewBag.id_usuario , id_oferta: @ViewBag.id_oferta }',
+            success: function (chartsdata) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+
+                var data = new google.visualization.DataTable();
+
+
+                data.addColumn('string', 'nombre_estado_postulacion');
+                data.addColumn('number', 'cantidad_postulados');
+                var h = 0;
+                if (chartsdata.length < 1) {
+                    document.getElementById('chartdiv').innerHTML = "<h2> aun no existen postulados en esta oferta. </h2>"
+                }
+                for (var i = 0; i < chartsdata.length; i++) {
+                    h += chartsdata[i].cantidad_postulados;
+                    data.addRow([chartsdata[i].nombre_estado_postulacion, chartsdata[i].cantidad_postulados]);
+                }
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                chart.draw(data,
+                  {
+                      title: "Postulados en ultima oferta Creada(Total: " + h + ")",
+                      position: "top",
+                      fontsize: "15px",
+                      chartArea: { width: '90%' },
+                  });
+            },
+            error: function () {
+                document.getElementById('chartdiv').innerHTML = "<h2>no posee ofertas creadas</h2>"
+            }
+        });
+      }
+
+
+</script>

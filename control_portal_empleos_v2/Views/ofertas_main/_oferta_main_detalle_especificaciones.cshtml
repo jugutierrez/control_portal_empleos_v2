@@ -1,0 +1,171 @@
+﻿@model control_portal_empleos_v2.Models.MainPageViewModel
+
+
+
+
+<table class="table">
+  
+    @if(Model.id_especificacion != 0)
+    {
+     <ul class="list-group">
+        <li class="list-group-item active clearfix">
+        Competencias
+@if ((bool)ViewBag.ver_postulantes == true)
+{
+            <div class="pull-right">
+                <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_agrega_habilidad/@Html.DisplayFor(model => Model.id_especificacion)">
+                    <a class="btn btn-info" data-toggle="modal" data-target="#mdsoporte">Agregar  <i class="-circle fa fa-lg text-default fa-plus-circle"></i></a>
+                </div>
+            </div>
+}
+       </li>
+           
+          @if (Model.especificaciones_ofertas_h.Count() != 0)
+{
+  
+
+            foreach (var item in Model.especificaciones_ofertas_h)
+            {
+                 <li class="list-group-item clearfix">@Html.DisplayFor(model => item.nombre_habilidad)  @Html.DisplayFor(model => item.nombre_grado_habilidad) (@Html.DisplayFor(model => item.nombre_nivel_importancia))
+         @if ((bool)ViewBag.editar_ofertas == true)
+         {
+          <div class="pull-right">
+                         <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_elimina_habilidad/@Html.DisplayFor(model => item.id_especificacion_oferta_habilidad)">
+                             <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">Eliminar <i class="-circle fa fa-lg text-default -circle fa-close"></i></a>
+                         </div>
+            
+                         </div>  }
+            </li>
+               
+            }
+       }
+            else
+            {
+            <label> Ingresa alguna Competencia</label>
+            }
+        </ul>
+
+    <ul class="list-group">
+        <li class="list-group-item active clearfix">Idiomas
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+            <div class="pull-right">
+                <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_agrega_idioma/@Html.DisplayFor(model => Model.id_especificacion)">
+                    <a class="btn btn-info" data-toggle="modal" data-target="#mdsoporte">Agregar <i class="-circle fa fa-lg text-default fa-plus-circle"></i></a>
+                </div>
+                </div>
+}
+        </li>
+
+@if (Model.especificaciones_ofertas_i.Count() != 0)
+{
+        foreach (var item1 in Model.especificaciones_ofertas_i)
+        {
+            <li class="list-group-item clearfix">@Html.DisplayFor(model => item1.nombre_idioma) @Html.DisplayFor(model => item1.nombre_nivel_idioma) (@Html.DisplayFor(model => item1.nombre_nivel_importancia))
+        
+        @if ((bool)ViewBag.editar_ofertas == true)
+        {
+        <div class="pull-right">
+                    <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_elimina_idiomas/@Html.DisplayFor(model => item1.id_especificacion_oferta_idioma)">
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">Eliminar <i class="-circle fa fa-lg text-default -circle fa-close"></i></a>
+                    </div></div>}</li>
+            
+        }
+}
+else
+{ 
+<label> Ingresa algun idioma</label>
+}
+    </ul>
+    <ul class="list-group">
+        <li class="list-group-item active clearfix">Profesiones
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+            <div class="pull-right">
+                <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_agrega_profesion/@Html.DisplayFor(model => Model.id_especificacion)">
+                    <a class="btn btn-info" data-toggle="modal" data-target="#mdsoporte">Agregar <i class="-circle fa fa-lg text-default fa-plus-circle"></i></a>
+                    </div>
+                </div>
+}
+        </li>
+  
+@if (Model.especificaciones_ofertas_p.Count() != 0)
+{
+        foreach (var item2 in Model.especificaciones_ofertas_p)
+        {
+        <li class="list-group-item  clearfix">@Html.DisplayFor(model => item2.nombre_profesion) (@Html.DisplayFor(model => item2.nombre_nivel_importancia))
+        @if ((bool)ViewBag.editar_ofertas == true)
+        {
+        <div class="pull-right">
+                <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_elimina_profesiones/@Html.DisplayFor(model => item2.id_especificacion_oferta_profesion)">
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">Eliminar <i class="-circle fa fa-lg text-default -circle fa-close"></i></a>
+                </div>
+                </div>
+        }
+        </li>
+            
+        }
+}
+else
+{ 
+<label> ingresa alguna profesion </label>
+}
+    </ul>
+    <ul class="list-group">
+        <li class="list-group-item active clearfix">Softwares
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+            <div class="pull-right">
+                <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_agrega_software/@Html.DisplayFor(model => Model.id_especificacion)">
+                    
+                    <a class="btn btn-info" data-toggle="modal" data-target="#mdsoporte">Agregar <i class="-circle fa fa-lg text-default fa-plus-circle"></i></a>
+                </div>
+                </div>
+}
+        </li>
+  
+@if (Model.especificaciones_ofertas_s.Count() != 0)
+{
+        foreach (var item3 in Model.especificaciones_ofertas_s)
+        {
+        <li class="list-group-item clearfix">@Html.DisplayFor(model => item3.nombre_software) @Html.DisplayFor(model => item3.nombre_grado_conocimiento_software)  (@Html.DisplayFor(model => item3.nombre_nivel_importancia))
+        @if ((bool)ViewBag.editar_ofertas == true)
+        {
+        <div class="pull-right">
+                <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_elimina_software/@Html.DisplayFor(model => item3.id_especificacion_oferta_software)">
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">Eliminar <i class="-circle fa fa-lg text-default -circle fa-close"></i></a>
+                </div>
+                </div>
+        }
+        </li>
+            
+        }
+}
+else
+{ 
+<label> ingresa algun software</label>
+}
+    </ul>
+    }
+    else
+    {
+    
+    <label> active las especificaciones para filtrar </label>
+    }
+
+</table>
+
+<script>
+
+    $(".btn1").on("click", function () {
+        var url = $(this).data('url');
+        $(".modaldiv").html("Cargando...");
+        $.get(url, function (data) {
+
+
+            $(".modaldiv").html(data);
+
+
+        });
+    });
+</script>

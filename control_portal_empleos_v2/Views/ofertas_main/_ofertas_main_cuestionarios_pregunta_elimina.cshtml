@@ -1,0 +1,63 @@
+﻿@model control_portal_empleos_v2.Models.cuestionarios_preguntas
+
+
+
+@using (Html.BeginForm("delete_cuestionario_pregunta", "ofertas_main", new { @id = @Html.DisplayFor(model => model.id_pregunta) }, FormMethod.Post, new { @id = "my-form" }))
+{ 
+        @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="text-center well">
+                <h2>Eliminar Pregunta</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <p> <h2>Pregunta a eliminar: </h2></p>
+                        <h2> <span class="label label-danger"> @Html.DisplayFor(model => model.preguntas.nombre_pregunta)</span></h2>
+                    </li>
+                   
+                    <li class="list-group-item">
+                        <input type="submit" value="Eliminar" class="btn btn-lg btn-block btn-info" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    $(".reemplazar").each(function (index3, item) {
+                        var url = $(item).data("url");
+                        if (url && url.length > 0) { $(item).load(url); }
+
+                    })
+                    $('#modal1').modal('hide')
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+
+</script>

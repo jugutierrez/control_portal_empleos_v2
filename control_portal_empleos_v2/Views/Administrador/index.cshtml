@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Panel de Administrador";
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Panel de Administrador</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab1default" data-toggle="tab">Aprobar cuentas</a>
+                            </li>
+                            <li>
+                                <a href="#tab2default" data-toggle="tab">Actualizar Datos</a>
+                            </li>
+                            <li>
+                                <a href="#tab3default" data-toggle="tab">Eliminar o Desactivar Datos</a>
+                            </li>
+                            <li>
+                                <a href="#tab4default" data-toggle="tab">Informes Administrador</a>
+                            </li>
+                            <li>
+                                <a href="#tab5default" data-toggle="tab">Incidencias Sistema</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @{ Html.RenderAction("GetMenu", "Administrador");}
+                                 
+                                    </div>
+                               
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab2default">
+                                <div class="col-md-4">
+                                    <div class="well">
+                                        @using (Html.BeginForm("ExportData", "control_informes", FormMethod.Post, new { @id = "my-form4" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true)
+
+                                            <div class="form-group">
+
+                                                <input type="submit" value="Descargar excel" class="btn btn-default" />
+
+                                            </div>
+
+                                        }
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#mdsoporte">Click me</a>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="well">
+
+
+
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="well"></div>
+                                </div>
+                            </div>
+
+
+                                    <div class="tab-pane fade" id="tab3default">Default 3</div>
+                            <div class="tab-pane fade" id="tab4default">Default 4</div>
+                            <div class="tab-pane fade" id="tab5default">Default 5</div>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

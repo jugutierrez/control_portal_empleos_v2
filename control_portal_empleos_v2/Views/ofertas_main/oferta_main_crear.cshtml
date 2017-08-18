@@ -1,0 +1,315 @@
+﻿@model control_portal_empleos_v2.Models.ofertas
+<div class="section">
+    <div class="container">
+
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Agregar Nueva Oferta al Sistema</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="well">
+                 
+                    <blockquote>
+                        <p>Al Agregar una  nueva oferta recuerde:</p>
+                         <h3>Todas las ofertas creadas se encuentran en un estado de: <mark class="text-danger">Sin Publicar</mark></h3>
+                
+                    </blockquote>
+                    <div class="row">
+
+
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#step1" data-toggle="tab" aria-controls="Datos de la oferta" role="tab" title="Datos de la oferta">
+                                    <span class="round-tab">
+                                        <i class="fa fa-fw fa-lg fa-plus-circle text-info"></i>
+                                    </span>
+                                </a>
+                            </li>
+                         
+
+                            <li role="presentation" class="disabled">
+                                <a href="#complete" data-toggle="tab" aria-controls="Finalizado" role="tab" title="Finalizado">
+                                    <span class="round-tab">
+                                        <i class="fa fa-fw fa-lg -plus fa-check text-info"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="well">
+
+
+
+                  
+                            <div class="tab-content">
+                           
+                                <div class="tab-pane active" role="tabpanel" id="step1">
+                                    <div class="step1">
+@using (Html.BeginForm("create_oferta", "ofertas_main", FormMethod.Post, new { @id = "my-form" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+                                        <div class="form-group">
+                                            <label class="control-label" for="exampleInputEmail1">Nombre de la oferta</label>
+                                            <input class="form-control" id="nombre_oferta" name="nombre_oferta"
+                                                   placeholder="EJ: Experto en desforestacion de espacios reducidos" type="text" required>
+                                        </div>
+
+                                            <div class="form-group ">
+                                                <label class="control-label" for="exampleInputEmail1">Ingrese monto a ofrecer (sin puntos)</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">$</div>
+                                                    <input class="form-control" id="monto_oferta" name="monto_oferta"  onkeypress="return soloNumeros(event)" maxlength="8"
+                                                           placeholder="EJ: 800000" type="text" required>
+                                             
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">Tipo de oferta</label>@Html.DropDownList("id_tipo_oferta", null, "Seleccione...",
+new { @class = "form-control" , @required="true" })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">Tipo de Contrato</label>@Html.DropDownList("id_contrato_oferta", null,
+"Seleccione...", new { @class = "form-control", @required = "true" })
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">jornada oferta</label>@Html.DropDownList("id_jornada_oferta", null, "Seleccione...",
+new { @class = "form-control", @required = "true" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">Direccion</label>@Html.DropDownList("id_direccion", null, "Seleccione...",
+new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">Departamento</label>@Html.DropDownList("id_departamento", null, "Seleccione...",
+new { @class = "form-control", @readonly = "readonly" })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">area</label>@Html.DropDownList("id_area", null, "Seleccione...", new
+                                                                                                                        {
+                                                                                                                            @class = "form-control",
+                                                                                                                            @readonly = "readonly",
+                                                                                                                            @required = "true"
+                                                                                                                        })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Detalle de la Oferta</label>
+                                                    <textarea class="form-control" id="descripcion_oferta"
+                                                              name="descripcion_oferta"
+                                                              maxlength="500" rows="6" placeholder="Describa en lo que consiste la oferta... " type="text" required></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-block btn-info btn-lg">
+                                                    Crear Nueva Oferta
+                                                    <span class="badge">
+                                                        <i class="fa fa-lg fa-arrow-circle-right"></i>
+                                                    </span>
+                                                </button>
+
+                                            </div>
+}
+</div>
+                                         
+
+                                        </div>
+                                   
+
+                                        <div class="tab-pane" role="tabpanel" id="complete">
+                                            <div class="step44">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="well">
+                                                            <h1 class="text-center">Creacion de nueva Oferta</h1>
+                                                            <div class="alert alert-dismissable alert-info">
+                                                                <h1 class="text-center text-primary">¡La oferta se ha creado Exitosamente!</h1>
+                                                            </div>
+                                                           
+                                                            <div class="well">
+                                                                <div class="row">
+                                                                    <div class="col-md-10 col-md-offset-1">
+                                                                        <h1 class="text-center">IMPORTANTE:</h1>
+                                                                        <h3 class="text-center">Informacion Importante Sobre la oferta:</h3>
+                                                                        <blockquote>
+                                                                            
+                                                                            <h4>Puedes segun tu interes habilitar nuevas funciones tales como: </h4>
+                                                                            <footer>ASIGNARLE CATEGORIAS</footer>
+                                                                            <footer>AGREGAR ENLACES A DOCUMENTOS</footer>
+                                                                            <footer>ASIGNARLE REQUERIMIENTOS NECESARIOS PARA POSTULAR A LA OFERTA</footer>
+                                                                            <footer>GENERAR CUESTIONARIOS PARA OBTENER INFORMACION ESPECIFICA DEL POSTULANTE</footer>
+                                                                        </blockquote>
+                                                                    </div>
+                                                                </div>
+                                                                <a class="btn btn-block btn-info btn-lg" id="btn_red" name="btn_red">IR AL DETALLE DE LA NUEVA OFERTA    </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return (key >= 48 && key <= 57)
+    }
+    $(document).ready(function (e) {
+        $('#id_departamento').empty();
+        $('#id_departamento').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+        $('#id_departamento').attr('readonly', true);
+        $('#id_area').empty();
+        $('#id_area').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+        $('#id_area').attr('readonly', true);
+        $('#id_area').attr('required', true);
+    });
+    function nextTab(elem) {
+  
+            $(elem).next().find('a[data-toggle="tab"]').click();
+
+    }
+
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                   // alert(response.responseText);
+                    var $active = $('.nav-tabs li.active');
+                    $active.addClass('disabled');
+                    $active.next().removeClass('disabled');
+                    nextTab($active);
+                    document.getElementById('btn_red').onclick = function () {
+                        window.location.replace('/ofertas_main/Detalle/' + response.responseText);
+                    }
+                   // window.location.replace('/ofertas_main/Detalle/' + response.responseText);
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+   
+    $(function () {
+
+        $(document).ready(function () {
+            //Initialize tooltips
+            $('.nav-tabs > li a[title]').tooltip();
+
+            //Wizard
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+                var $target = $(e.target);
+
+                if ($target.parent().hasClass('disabled')) {
+                    return false;
+                }
+            });
+
+            $(".next-step").click(function (e) {
+
+                var $active = $('.nav-tabs li.active');
+                $active.addClass('disabled');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+            
+
+            });
+    
+        });
+
+      
+        $('#id_direccion').change(function () {
+
+            $('#id_departamento').empty();
+            $('#id_departamento').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+            $('#id_departamento').attr('readonly', true);
+            $('#id_area').empty();
+            $('#id_area').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+            $('#id_area').attr('readonly', true);
+            $.ajax({
+                type: "GET",
+                url: "/ofertas_main/GetStatesByCountryId",
+                datatype: "Json",
+                data: { countryId: $('#id_direccion').val() },
+                success: function (data) {
+                    if (data != null) {
+
+                        $.each(data, function (index, value2) {
+                            $('#id_departamento').append('<option value="' + value2.id_departamento + '">' + value2.nombre_departamento + '</option>');
+                        });
+                        $('#id_departamento').attr('readonly', false);
+                        $('#id_departamento').attr('readonly', false);
+                    }
+                }
+            });
+        });
+        $('#id_departamento').change(function () {
+
+            $('#id_area').empty();
+            $('#id_area').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+            $('#id_area').attr('readonly', true);
+            $.ajax({
+                type: "GET",
+                url: "/ofertas_main/GetStatesByCountryId2",
+                datatype: "Json",
+                data: { countryId: $('#id_departamento').val() },
+                success: function (data) {
+                    if (data != null) {
+                        $.each(data, function (index, value2) {
+                            $('#id_area').append('<option value="' + value2.id_area + '">' + value2.nombre_area + '</option>');
+                        });
+                        $('#id_area').attr('readonly', false);
+                    }
+                }
+            });
+        });
+    });
+  
+
+
+</script>

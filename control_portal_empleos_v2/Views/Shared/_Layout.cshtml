@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html ng-app="app" ng-cloak>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+
+
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+          rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/angular1")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body ng-controller="modals">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="container" >
+            @{Html.RenderAction("LoginPartial", "control_cuenta");}
+        </div>
+
+    </div>
+
+    <div class="container body-content">
+
+        @RenderBody()
+    </div>
+
+    <hr />
+    <footer class="section section-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3>Municipalidad de Maipu</h3>
+                                    <hr>
+                                    <div class="textwidget">
+                                        <img class="alignleft" src="http://www.municipalidadmaipu.cl/wp-content/uploads/2014/11/logo-blanco.png"
+                                             alt="logo-blanco2" width="80">
+                                        <p>
+                                            Teléfono
+                                            <br>56-2-2677 6000
+                                        </p>
+                                        <p>
+                                            Dirección
+                                            <br>Av. 5 de Abril 0260
+                                            <br>Maipú. Santiago Chile
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h3>Redes Sociales</h3>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4>Twitter</h4>
+                                            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/maipu_chile" data-widget-id="718171785565454336">Tweets por el maipu_chile.</a>
+                                            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+                                        </div>
+                                        <div class="col-md-6">
+
+
+                                            <h4>Facebook</h4>
+                                            <div class="fb-page" data-href="https://www.facebook.com/municipalidadmaipuchile/" data-tabs="timeline" data-height="300" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/municipalidadmaipuchile/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/municipalidadmaipuchile/">Municipalidad de Maipú Chile</a></blockquote></div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fade modal" id="mdsoporte">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="modaldiv" class="modaldiv">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+    top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+    opacity: .8; filter: alpha(opacity=50);display:none">
+
+        <div class="col-md-6 col-md-offset-3">
+            <img src="~/Images/logo_muni.png" class="center-block img-responsive" height="300" width="300">
+
+
+            <h1 class="text-center text-info">
+                <i class="fa fa-flip-horizontal fa-fw fa-pulse fa-sun-o"></i>Cargando...
+            </h1>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar"
+                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
+        </div>
+
+    </div>
+    @Scripts.Render("~/bundles/face")
+    @Scripts.Render("~/bundles/otrojs")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+ @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<script>
+
+    $(".btn2").on("click", function () {
+        var url = $(this).data('url');
+        $(".modaldiv").html("Cargando...");
+        $.get(url, function (data) {
+
+
+            $(".modaldiv").html(data);
+
+
+        });
+    });
+
+
+
+
+
+
+
+   
+
+
+</script>

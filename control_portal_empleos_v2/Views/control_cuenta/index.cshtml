@@ -1,0 +1,135 @@
+﻿@model control_portal_empleos_v2.Models.usuarios
+@{
+    ViewBag.Title = "Mi Cuenta";
+}
+<div class="section"><div class="container"><div class="row"><div class="col-md-12"><h1 class="text-center"></h1></div></div></div></div>
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">Nivel de permisos de la cuenta:</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2 class="text-center text-danger">@Html.DisplayFor(Model => Model.tipo_usuarios.nombre_tipo_usuario)
+                                 </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @{ Html.RenderPartial("_info_usuario_cuenta");  }
+          
+               
+
+                </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">Cuenta creada el:</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h1 class="text-center">@Html.DisplayFor(Model => Model.fecha_creacion_usuario)</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">Ultima Actualizacion:</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h1 class="text-center">@Html.DisplayFor(Model => Model.fecha_actualizacion_usuario)</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="well">
+                           
+                           
+                            <h1 class="text-center">Mis Datos</h1>
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6 text-center">
+                                            <div class="text-left well">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputEmail1">Nombre Completo</label>
+                                                    <input class="form-control" id="exampleInputEmail1"
+                                                           type="text" disabled="disabled" value="@Html.DisplayFor(Model => Model.nombre_usuario) @Html.DisplayFor(Model => Model.apellido_paterno_usuario) @Html.DisplayFor(Model => Model.apellido_materno_usuario)">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Nombre Cuenta</label>
+                                                    <input class="form-control" id="exampleInputPassword1"
+                                                           type="text" disabled="disabled" value="@Html.DisplayFor(Model => Model.nombre_cuenta_usuario)">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Rut</label>
+                                                    <input class="form-control" id="exampleInputPassword1" type="text"
+                                                           disabled="disabled" value="@Html.DisplayFor(Model => Model.rut_usuario) - @Html.DisplayFor(Model => Model.dig_rut_usuario)">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Anexo</label>
+                                                    <input class="form-control" id="exampleInputPassword1" type="text"
+                                                           disabled="disabled" value="@Html.DisplayFor(Model => Model.anexo_usuario)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <div class="text-left well">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputEmail1">Correo Electronico</label>
+                                                    <input class="form-control" id="exampleInputEmail1"
+                                                           type="text" disabled="disabled" value="@Html.DisplayFor(Model => Model.correo_electronico_usuario)" >
+                                                </div>
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-md-offset-3 text-center">
+                                                <div id="btn1" class="btn1" data-url="@Url.Action("vista_actualiza_datos_contacto_usuario","control_cuenta", new { id = Html.DisplayFor(model => model.id_usuario)} )">
+                                                    <a class="btn btn-block btn-lg btn-primary" data-toggle="modal" data-target="#mdsoporte">Deseo Actualizar mis Datos</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="text-center well">
+                                    <h2 class="text-center">Cambiar contraseña</h2>
+                                    <div id="btn1" class="btn1" data-url="@Url.Action("vista_actualiza_clave_usuario","control_cuenta", new { id = Html.DisplayFor(model => model.id_usuario)} )">
+                                        <a class="btn btn-lg btn-primary" data-toggle="modal" data-target="#mdsoporte">Deseo Cambiar mi contraseña</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+                </div>
+    </div>
+</div>
+
+<script>
+
+    $(".btn1").on("click", function () {
+        var url = $(this).data('url');
+        $(".modaldiv").html("Cargando...");
+        $.get(url, function (data) {
+
+
+            $(".modaldiv").html(data);
+
+
+        });
+    });
+</script>

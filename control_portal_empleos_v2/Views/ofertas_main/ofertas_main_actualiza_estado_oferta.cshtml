@@ -1,0 +1,127 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <h1 class="text-center">Cambiar estado oferta</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <hr>
+        <h2  class="text-center">
+            Estado actual:
+@for (int i = 0; i < ViewBag.id_estado_oferta_control.Length; i++)
+{
+    if (ViewBag.id_oferta_estado == ViewBag.id_estado_oferta_control[i])
+    {
+            <span class="label label-success">@ViewBag.nombre_estado_oferta_control[i]</span>
+    }
+}
+        </h2>
+    </div>
+</div>
+@using (Html.BeginForm("actualiza_estado_oferta_datos", "ofertas_main", FormMethod.Post, new { @id = "formulario" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Hidden("id", (Int32)ViewBag.id_oferta)
+    <div class="row">
+         <div class="form-group">
+            <div class="btn-group" data-toggle="buttons">
+
+                @for (int i = 0; i < ViewBag.id_estado_oferta_control.Length; i++)
+                {
+
+
+                    if (ViewBag.id_oferta_estado != ViewBag.id_estado_oferta_control[i])
+                    {
+                        if (ViewBag.id_oferta_estado == 0)
+                        {
+                            <div class="col-md-4 col-md-offset-4">
+                                <h1 class="text-center">
+                                    <span class="label label-primary">@ViewBag.nombre_estado_oferta_control[i]</span>
+                                </h1>
+                                <label class="btn btn-info">
+                                    <a href="#"><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
+                                    @Html.RadioButton("id_oferta_estado", (Int32)@ViewBag.id_estado_oferta_control[i], false, new { id = "id_oferta_estado" })
+                                </label>
+                            </div>
+                            break;
+                        }
+                        else
+                        {
+                        <div class="col-md-4 ">
+
+
+                            <label class="btn btn-primary">
+                                <h1>
+                                    <span class="label label-danger">@ViewBag.nombre_estado_oferta_control[i]</span>
+                                </h1>
+                                <a href="#"><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
+                                @Html.RadioButton("id_oferta_estado", (Int32)@ViewBag.id_estado_oferta_control[i], false, new { id = "id_oferta_estado" })
+
+                            </label>
+
+                        </div>
+                        }
+
+
+
+
+
+
+                    }
+
+                }
+
+
+
+
+            </div>
+
+        </div>
+        
+    </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center well">
+            <button type="submit" class="btn btn-block btn-lg btn-info">
+    Cambiar estado
+</button>
+        </div>
+    </div>
+    
+</div>
+}
+
+
+
+<script type="text/javascript">
+
+    $("#formulario").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    location.reload();
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                   
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+</script>

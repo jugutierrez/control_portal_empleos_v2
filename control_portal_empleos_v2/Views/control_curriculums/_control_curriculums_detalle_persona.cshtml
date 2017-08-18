@@ -1,0 +1,168 @@
+﻿@model control_portal_empleos_v2.Models.super_modelo_curriculum
+    <ul class="nav nav-pills">
+        <li class="active"><a data-toggle="pill" href="#home">Curriculum</a></li>
+        <li><a data-toggle="pill" href="#menu1">Enviar Invitacion A Postular</a></li>
+
+
+    @if ((bool)ViewBag.compartir_curriculums == true)
+                {
+        <li><a data-toggle="pill" href="#menu2">Compartir CV via Email</a></li>
+}
+        <li><a data-toggle="pill" href="#menu3">Descargar Curriculum</a></li>
+        <li><a data-toggle="pill" href="#menu4">Historial De Postulaciones</a></li>
+    </ul>
+<hr />
+
+    <div class="tab-content text-center">
+        <div id="home" class="text-left tab-pane fade in active">
+            @{ Html.RenderPartial("_formato_curriculum_pdf", Model);  }
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Invitacion a postular</h3>
+            <p>Favor Seleccione la oferta laboral a la cual desea invitar a postular a esta persona</p>
+@using (Html.BeginForm("Invita_oferta_laboral", "control_curriculums", FormMethod.Post, new { @id = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+      @Html.Hidden("id" , @Html.DisplayFor(model => model.persona_curriculum_vista.id_persona))
+     @Html.Hidden("correo", Html.DisplayFor(model => model.persona_curriculum_vista.correo_electronico_persona))
+   <p>La Invitacion se enviara al Correo: <h2>@Html.DisplayFor(model => model.persona_curriculum_vista.correo_electronico_persona)</h2></p>
+     <div class="form-group">
+         <div class="form-group">
+             <label class="control-label" for="exampleInputPassword1">Listado Ofertas</label>
+            @Html.DropDownList("id_oferta", (IEnumerable<SelectListItem>)ViewBag.id_oferta, "Seleccione...", new { @class = "form-control" , @required = true })
+
+         </div>
+                <input type="submit" value="Enviar Correo de invitacion" class="btn btn-lg btn-info" />
+    
+        </div>
+
+}
+
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Compartir CV</h3>
+            <p>Ingrese Correo Electronico para enviar Copia Descargable del Curriculum VITAE</p>
+@using (Html.BeginForm("Correo_pdf", "control_curriculums", FormMethod.Post, new { @id = "my-form2" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+      @Html.Hidden("id" , @Html.DisplayFor(model => model.persona_curriculum_vista.id_persona))
+
+              <div class="form-group">
+                <label class="control-label" for="correo">Correo Electronico </label>
+                <input class="form-control" id="correo" name="correo"
+                placeholder="Ej: maipu@maipu.cl" type="email" required>
+              </div>
+     <div class="form-group">
+        
+                <input type="submit" value="Enviar Copia Curriculum" class="btn btn-lg btn-info" />
+            
+        </div>
+
+}
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            
+            <p><h1> Seleccione el Documento a Descargar</h1></p>
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+                   
+                    <a target="_blank" href="@Url.Action("Descarga_pdf", "control_curriculums", new { id = Html.DisplayFor(model => model.persona_curriculum_vista.id_persona), nombre_persona = Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) })" class="btn btn-info btn-lg">Descargar Copia Curriculum<i class="fa fa-fw fa-download"></i></a>
+                </div>
+
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <a target="_blank" href="@Url.Action("Descarga_historial_pdf", "control_curriculums", new { id = Html.DisplayFor(model => model.persona_curriculum_vista.id_persona), nombre_persona = Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) })" class="btn btn-info btn-lg">Descargar Historial de Postulaciones<i class="fa fa-fw fa-download"></i></a>
+                </div>
+
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <a target="_blank" href="@Url.Action("Descarga_cronologia_full_pdf", "control_curriculums", new { id = Html.DisplayFor(model => model.persona_curriculum_vista.id_persona), nombre_persona = Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) })" class="btn btn-info btn-lg">Descargar Historial Cronologico persona<i class="fa fa-fw fa-download"></i></a>
+                </div>
+
+            </div>
+            <hr />
+       
+        </div>
+        <div id="menu4" class="tab-pane fade">
+
+            @{ Html.RenderPartial("_historial_postulaciones_pdf", Model);  }
+                </div>
+          
+        </div>
+
+<script type="text/javascript">
+
+
+    $("#form1").on("submit", function (e) {
+        e.preventDefault();
+        $("#divLoading").show();
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    $("#divLoading").hide();
+                    $('#modal1').modal('hide')
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                    $("#divLoading").hide();
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+                $("#divLoading").hide();
+            }
+
+
+
+
+        });
+
+    });
+    $("#my-form2").on("submit", function (e) {
+        e.preventDefault();
+        $("#divLoading").show();
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    $("#divLoading").hide();
+                    $('#modal1').modal('hide')
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                    $("#divLoading").hide();
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+                $("#divLoading").hide();
+            }
+
+
+
+
+        });
+
+    });
+
+
+
+</script>

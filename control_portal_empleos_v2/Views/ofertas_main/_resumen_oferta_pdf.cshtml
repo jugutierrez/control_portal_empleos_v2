@@ -1,0 +1,283 @@
+﻿@model control_portal_empleos_v2.Models.vista_oferta_descargar
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+      rel="stylesheet" type="text/css">
+<link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+      rel="stylesheet" type="text/css">
+@using control_portal_empleos_v2.Helpers;
+
+<div class="row">
+    <div class="col-xs-12">
+ 
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="well">
+                        <img src="~/Images/logo_muni.png" class="center-block img-responsive img-rounded">
+                    </div>
+                </div>
+                <div class="col-xs-7">
+                    <div class="well text-center">
+                      
+                        
+                        
+                        
+                            <h1 class="text-center"> @Html.DisplayFor(Model => Model.nombre_oferta)</h1>
+                            <hr>
+                            <h3 class="text-center">
+                                <span class="label label-info">Codigo Referencial: @Html.DisplayFor(Model => Model.id_oferta)</span>
+                            </h3>
+                       
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="well">
+                        Publicada el:
+                        <hr>
+                        <h4 class="text-center">
+                            <span class="label label-info">@Html.DisplayFor(Model => Model.fecha_creacion_oferta)</span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+     @if((Int32)ViewBag.oferta_inclusiva == 1)
+     {
+        <div class="row" >
+            <div class="col-md-12">
+                <div class="alert alert-dismissable alert-info">
+                    <h3 class="text-center text-muted">
+                        <i class="fa fa-2x fa-fw fa-wheelchair text-muted"></i>
+                        Esta oferta esta enfocada en la inclusividad de las personas
+                        <i class="fa fa-2x fa-fw fa-wheelchair text-muted"></i>
+                    </h3>
+                </div>
+            </div>
+        </div>
+     }
+
+            <div class="row">
+                <div class="col-xs-4">
+                 
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                               
+
+                           
+
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <p class="lead text-default text-left text-muted">Detalles:</p>
+                                         
+                                        </div>
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <h4>    <p> <i class="fa   fa-fw text-warning fa-suitcase"></i> Tipo de contrato: </p> <span class="label label-info">@Html.DisplayFor(Model => Model.nombre_contrato_oferta)</span> </h4>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <h4>   <p><i class="fa  fa-fw text-warning fa-laptop"></i>Oferta:</p><span class="label label-info">@Html.DisplayFor(Model => Model.nombre_tipo_oferta)</span></h4>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <h4>   <p> <i class="fa fa-fw text-warning fa-clock-o"></i>Jornada: </p><span class="label label-info">@Html.DisplayFor(Model => Model.nombre_jornada_oferta)</span></h4>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <h4>  <p>  <i class="fa  fa-fw text-warning fa-dollar"></i> Sueldo:</p><span class="label label-info">@Html.DisplayFor(Model => Model.monto_oferta)</span></h4>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <h4> <p><i class="fa  fa-fw text-warning fa-group"></i>Direccion: </p><span class="label label-info">@Html.DisplayFor(Model => Model.nombre_direccion),@Html.DisplayFor(Model => Model.nombre_departamento) </span></h4>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <h4>  <p>  <i class="fa  fa-fw text-warning fa-map-marker"></i> Area: </p><span class="label label-info">@Html.DisplayFor(Model => Model.nombre_area)</span></h4>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                             
+                            </div>
+                        </div>
+                       
+              
+                   
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="well text-center">
+                                <h2 class="text-center">Postule Directamente en nuestro Portal</h2>
+
+                                @Html.GenerateQrCode("http://portalempleo.azurewebsites.net/Ofertas_control/vista_detalle_oferta/" + @Html.DisplayFor(Model => Model.id_oferta))
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-xs-8">
+                    
+                  
+
+                        <div class="row">
+                            <div class="col-xs-12">
+
+
+
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <p class="lead text-default text-left text-muted">Descripcion de la oferta:</p>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">@Html.DisplayFor(Model => Model.descripcion_oferta)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <p class="lead text-default text-left text-muted">Necesidades de la Oferta:</p>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item"> <h5>Competencias</h5></li>
+                                    <li class="list-group-item" >
+                                       
+                                        @if (ViewBag.nombre_habilidad.Length != 0)
+                                        {
+                                            for (int i = 0; i < ViewBag.nombre_habilidad.Length; i++)
+                                            {
+                                                <h3>
+                                                    <span class="label label-info">
+                                                        @ViewBag.nombre_habilidad[i] ( @ViewBag.nombre_grado_habilidad[i])
+                                                    </span>
+
+                                                </h3>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <h3>
+                                                <span class="label label-danger">
+                                                   Sin especificar
+                                                </span>
+
+                                            </h3>
+                                        }
+
+                                    </li>
+                                    <li class="list-group-item"> <h5>idiomas</h5></li>
+                                    <li class="list-group-item" >
+                                      
+                                      
+                                      
+                                        @if (ViewBag.nombre_idioma.Length != 0)
+                                        {
+                                            for (int i = 0; i < ViewBag.nombre_idioma.Length; i++)
+                                            {
+                                           
+                                                <h3>
+                                                    <span class="label label-info">
+                                                        @ViewBag.nombre_idioma[i] (@ViewBag.nombre_nivel_idioma[i])
+                                                    </span>
+
+                                                </h3>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <h3>
+                                                <span class="label label-danger">
+                                                    Sin especificar
+                                                </span>
+
+                                            </h3>
+                                        }
+                                            
+                                     
+
+                                    </li>
+                                    <li class="list-group-item"> <h5>profesiones</h5></li>
+                                    <li class="list-group-item" >
+                                      
+                                        
+
+                                         
+                                           
+                                        @if (ViewBag.nombre_profesion.Length != 0)
+                                        {
+                                            for (int i = 0; i < ViewBag.nombre_profesion.Length; i++)
+                                            {
+                                              
+                                                <h3>
+                                                    <span class="label label-info">
+                                                        @ViewBag.nombre_profesion[i] 
+
+                                                    </span>
+
+                                                </h3>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <h3>
+                                                <span class="label label-danger">
+                                                    Sin Especificar
+
+                                                </span>
+
+                                            </h3>
+                                        }
+
+                                    </li>
+                                    <li class="list-group-item"> <h5>Softwares</h5></li>
+                                    <li class="list-group-item" >
+                                      
+                                        
+
+                                        @if (ViewBag.nombre_software.Length != 0)
+                                        {
+                                            for (int i = 0; i < ViewBag.nombre_software.Length; i++)
+                                            {
+                                       
+                                                <h3>
+                                                    <span class="label label-info">
+                                                        @ViewBag.nombre_software[i] (@ViewBag.nombre_grado_conocimiento_software[i])
+
+                                                    </span>
+
+                                                </h3>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <h3>
+                                                <span class="label label-danger">
+                                                    Sin Especificar
+
+                                                </span>
+
+                                            </h3>
+                                        }                                       
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                   
+                </div>
+            </div>
+
+          
+        </div>
+ 
+    </div>
+
+
+
+
+
+

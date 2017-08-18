@@ -1,0 +1,71 @@
+﻿@model control_portal_empleos_v2.Models.usuarios
+
+<div class="well">
+
+        @if (Model != null)
+        {
+            if (Model.foto_usuario != null)
+            {
+
+                <div id="btn1" class="btn1" data-url="@Url.Action("vista_actualiza_foto_usuario","control_cuenta", new { id = Html.DisplayFor(model => model.id_usuario)})">
+                  <img src="data:image/png;base64,@Convert.ToBase64String(Model.foto_usuario,0,Model.foto_usuario.Length)" class="img-responsive" data-toggle="modal" data-target="#mdsoporte">
+                </div>
+            }
+            else
+            {
+
+                    <div id="btn1" class="btn1" data-url="@Url.Action("vista_actualiza_foto_usuario","control_cuenta", new { id = Html.DisplayFor(model => model.id_usuario)})">
+
+
+                       <img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive" data-toggle="modal" data-target="#mdsoporte">
+                    </div>
+                    }
+
+
+
+                    }
+                    else
+                    {
+                    <div id="btn1" class="btn1" data-url="@Url.Action("vista_actualiza_foto_usuario","control_cuenta", new { id = Html.DisplayFor(model => model.id_usuario)} )">
+                        
+
+                       <img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive" data-toggle="modal" data-target="#mdsoporte">
+                    </div>
+                    }
+
+
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4 class="text-left">
+                                <i class="fa fa-user text-info"></i> @Html.DisplayFor(model => model.nombre_usuario) @Html.DisplayFor(model => model.apellido_paterno_usuario) @Html.DisplayFor(model => model.apellido_materno_usuario)
+                            </h4>
+                        </li>
+                   
+                        <li class="list-group-item">
+                            <h4 class="text-left">
+                                <i class="fa fa-phone-square text-info"></i> @Html.DisplayFor(model => model.anexo_usuario)
+                            </h4>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="text-left">
+                                <i class="fa text-info fa-envelope"></i> @Html.DisplayFor(model => model.correo_electronico_usuario)
+                            </h4>
+                        </li>
+                    </ul>
+                </div>
+
+<script>
+
+    $(".btn1").on("click", function () {
+        var url = $(this).data('url');
+        $(".modaldiv").html("Cargando...");
+        $.get(url, function (data) {
+
+
+            $(".modaldiv").html(data);
+
+
+        });
+    });
+</script>

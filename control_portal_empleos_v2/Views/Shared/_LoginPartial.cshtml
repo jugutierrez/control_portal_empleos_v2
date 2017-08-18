@@ -1,0 +1,94 @@
+﻿
+
+
+
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    @if (Session.Keys.Count > 0)
+    {
+     
+        <a href='@Url.Action("Index", "ofertas_main")' class="navbar-brand">
+            <div class="row">
+                <div class="col-xs-2">
+                    <img height="25" alt="Inicio" src='@Url.Content("~/Images/logo_muni.png")' class="center-block">
+                </div>
+                <div class="col-xs-10">
+                    <span class="label label-info"> Portal De Empleos</span>
+                </div>
+            </div>
+        </a>
+    }
+    else
+
+    {
+        <a href='@Url.Action("Index", "login")' class="navbar-brand">
+
+            <div class="row">
+                <div class="col-xs-2">
+                    <img height="25" alt="Inicio" src='@Url.Content("~/Images/logo_muni.png")' class="center-block">
+                </div>
+                <div class="col-xs-10">
+                    <span class="label label-info"> Portal De Empleos</span>
+                </div>
+            </div>
+        </a>
+    }
+
+
+</div>
+<div class="navbar-collapse collapse">
+
+
+
+
+    <ul class="nav navbar-nav">
+        @if (Session.Keys.Count > 0)
+        {
+if ((bool)ViewBag.crear_ofertas == true)
+{
+    <li>@Html.ActionLink("Crear Oferta", "oferta_main_crear", "ofertas_main", routeValues: null, htmlAttributes: new { id = "crear_oferta" })</li>
+}
+            if ((bool)ViewBag.listado_ofertas == true)
+                {
+                <li>@Html.ActionLink("Listado de Ofertas", "mis_ofertas", "ofertas_main", routeValues: null, htmlAttributes: new { id = "mis_ofertas" })</li>
+            }
+            if ((bool)ViewBag.ver_curriculums == true)
+                {
+                <li>@Html.ActionLink("Buscar Curriculums", "index", "control_curriculums", routeValues: null, htmlAttributes: new { id = "curriculums" })</li>
+            }
+            if ((bool)ViewBag.informes_basicos == true)
+                {
+                <li>@Html.ActionLink("Panel de Control", "index", "control_informes", routeValues: null, htmlAttributes: new { id = "informes" })</li>
+            }
+            
+        }
+     
+    </ul>
+
+
+
+    <ul class="nav navbar-nav navbar-right">
+        <li><a data-toggle="modal" data-target="#mdsoporte" id="btn2" class="btn2" data-url="/Soporte/soporte">Soporte</a></li>
+        @if (Session.Keys.Count > 0)
+        {
+            if ((bool)ViewBag.panel_administrador == true)
+                {
+                <li>@Html.ActionLink("Administrador", "Index", "Administrador", routeValues: null, htmlAttributes: new { id = "Administrador" })</li>
+            }
+            <li>@Html.ActionLink("Mi Cuenta", "index", "control_cuenta", routeValues: null, htmlAttributes: new { id = "Administrador" })</li>
+
+
+            <li>@Html.ActionLink("Cerrar Session", "LogOff", "login")</li>
+        
+        }
+     
+    </ul>
+
+
+
+
+</div>

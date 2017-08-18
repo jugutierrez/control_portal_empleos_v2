@@ -1,0 +1,165 @@
+﻿@model control_portal_empleos_v2.Models.Correo_Soporte
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Centro de Soporte</h1>
+        </div>
+    </div>
+
+  @using (Html.BeginForm("correo_soporte", "Soporte", FormMethod.Post, new { id = "soporteForm", enctype = "multipart/form-data" }))
+  {
+        @Html.AntiForgeryToken()
+
+
+        @Html.ValidationSummary(true)
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @if(ViewBag.nombre_usuario == null)
+                                {
+                                <label class="control-label" for="exampleInputEmail1">Nombre Completo</label>
+                                <input class="form-control" id="nombre_remitente" name="nombre_remitente"
+                                       placeholder="Ej: pedro pica piedra" type="text">}
+                                else
+                                {
+                                    <label class="control-label" for="exampleInputEmail1">Nombre Completo:</label>
+                                    <input class="form-control" id="nombre_remitente" name="nombre_remitente"
+                                           placeholder="Ej: pedro pica piedra" type="text" value="@ViewBag.nombre_usuario" disabled>
+                                   
+                                   
+                                }
+                            </div>
+                            <div class="form-group">
+@if (ViewBag.correo_usuario == null)
+{
+                                <label class="control-label" for="exampleInputEmail1">Correo</label>
+                                <input class="form-control" id="correo_remitente" name="correo_remitente"
+                                       placeholder="Ej: maipu@maipu.cl" type="email">
+}
+else
+{ <label class="control-label" for="exampleInputEmail1">Correo</label>
+                                <input class="form-control" id="correo_remitente" name="correo_remitente"
+                                       placeholder="Ej: maipu@maipu.cl" type="email" value="@ViewBag.correo_usuario" disabled>}
+                            </div>
+                            <div class="form-group">
+@if (ViewBag.anexo_usuario == null)
+{
+                                <label class="control-label" for="titulo">anexo</label>
+                                <input class="form-control" id="anexo_remitente" name="anexo_remitente"
+                                       placeholder="Ej: 6987" type="text" >
+}
+else
+{
+    <label class="control-label" for="titulo">anexo</label>
+    <input class="form-control" id="anexo_remitente" name="anexo_remitente"
+           placeholder="Titulo" type="text" value="@ViewBag.anexo_usuario" disabled>
+}
+                            </div>
+                        
+                        </div>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.file, new { id = "file", name = "file", type = "File", accept = "image/x-png, image/gif, image/jpeg", onchange = "document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])" })
+                            <img class="center-block img-responsive img-rounded" id="preview" name="preview"  />
+                        
+
+
+
+                        </div>
+                       
+                            
+                              
+                        
+
+                        
+                    </div>
+                  
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well">
+                                <div class="form-group">
+                                    <label class="control-label" for="exampleInputPassword1">Asunto</label>
+                                    <input class="form-control" id="asunto_soporte" name="asunto_soporte"
+                                           placeholder="Ej: mi pagina no carga" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="exampleInputPassword1">Mensaje</label>
+                                    <textarea class="form-control" id="mensaje_soporte" name="mensaje_soporte" maxlength="500" rows="6"
+                                              placeholder="Ej: por algun motivo mi pagina no carga , etc." type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                         
+                          
+                        
+                                <button type="button" class="btn btn-lg btn-block btn-info" value="Actualizar" id="upload">Enviar Soporte</button>
+</div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+    }
+
+<script >
+    $('#upload').on('click', function (e) {
+        $("#divLoading").show();
+        var fileform = document.getElementById('file');
+        var files = fileform.files;    
+        var nombre_remitente = $('#nombre_remitente').val();
+        var correo_remitente = $('#correo_remitente').val();
+        var anexo_remitente = $('#anexo_remitente').val();
+        var asunto_soporte = $('#asunto_soporte').val();
+        var mensaje_soporte = $('#mensaje_soporte').val();
+      
+            var data = new FormData();
+            data.append("file", files[0]);
+            data.append("nombre_remitente", nombre_remitente);
+            data.append("correo_remitente", correo_remitente);
+            data.append("anexo_remitente", anexo_remitente);
+            data.append("asunto_soporte", asunto_soporte);
+            data.append("mensaje_soporte", mensaje_soporte);
+
+
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("correo_soporte","Soporte")',
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (response) {
+                    if (response != null && response.success) {
+                        alert(response.responseText);
+                        $("#divLoading").hide();
+                        $('#mdsoporte').modal('hide')
+
+
+
+                    } else {
+                        // DoSomethingElse()
+                        alert(response.responseText);
+                        $("#divLoading").hide();
+                    }
+                },
+                error: function (response) {
+                    alert("error!");  //
+                    $("#divLoading").hide();
+            
+                }
+            });
+        
+    });
+
+
+</script>
+
+ 

@@ -1,0 +1,62 @@
+﻿<div class="col-md-6">
+    <div class="well">
+
+
+        <blockquote class="lead">
+            <p>Total Reclutados por Mes</p>
+        </blockquote><div id="columnchart_material" class="img-responsive"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+  google.charts.load('current', { 'packages': ['bar'] });
+
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+          $.ajax({
+              type: 'POST',
+              dataType: 'json',
+              contentType: 'application/json',
+              url: '/control_informes/postulados_por_ano',
+              data: '{}',
+              success: function (chartsdata) {
+                              var data = new google.visualization.DataTable();
+
+
+                              data.addColumn('string', 'mes');
+                              data.addColumn('number', 'cantidad_postulados_mes');
+                              var h = 0;
+                              for (var i = 0; i < chartsdata.length; i++) {
+                                  h += chartsdata[i].cantidad_postulados;
+                                  data.addRow([chartsdata[i].mes, chartsdata[i].cantidad_postulados_mes]);
+                          }
+
+                          var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+
+                          var options = {
+
+
+                      'bars': 'horizontal', // Required for Material Bar Charts.
+                      'legend': { position: 'none' },
+                      'axes': {
+                          x: {
+                                  0: { side: 'top' } // Top x-axis.
+                              }
+                          },
+                      'bar': { groupWidth: "70%" }
+
+                      };
+                      chart.draw(data, options);
+              },
+              error: function () {
+                      alert("Ocurrio un Problema Para Cargar los datos , favor refresque la pagina");
+                  }
+
+
+              });
+      }
+</script>

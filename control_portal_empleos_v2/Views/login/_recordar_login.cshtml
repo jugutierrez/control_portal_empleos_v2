@@ -1,0 +1,112 @@
+﻿
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Recupere sus Credenciales</h1>
+            </div>
+        </div>
+  
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="well">
+                    <blockquote>
+                        <p>Tambien Puede ponerse en contacto directamente con un encargado en los siguientes anexos.</p>
+                        <footer>Desarrollo Ditec</footer>
+                        <footer>Anexo n°1: 6385</footer>
+                        <footer>Anexo n°2: 8350</footer>
+                    </blockquote>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                
+                    <div class="row">
+    <div class="col-md-8 col-md-offset-2"><div class="well">
+    @using (Html.BeginForm("recordar_login", "login", FormMethod.Post, new { @id = "my-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <label class="control-label" for="exampleInputPassword1">Nombre</label>
+            <input class="form-control" id="nombre_usuario" name="nombre_usuario" placeholder="Ej: juan gutierrez"
+                   type="text" maxlength="100" required >
+        </div>
+        
+      
+
+            <div class="form-group">
+                <label class="control-label" for="exampleInputPassword1">Rut</label>
+                <div class="row">
+                <div class="col-sm-10">
+                    <input class="form-control" id="rut_usuario" name="rut_usuario" placeholder="Ej: 18356397"
+                           type="text" maxlength="9" required >
+                </div>
+
+                <div class="col-sm-2">
+                    <input class="form-control" id="dig_rut_usuario" name="dig_rut_usuario" placeholder="Ej: k"
+                           type="text" maxlength="1" required >
+                </div>
+
+            </div>
+        </div>
+            <div class="form-group">
+                <label class="control-label" for="exampleInputPassword1">Anexo</label>
+                <input class="form-control" id="anexo_usuario" name="anexo_usuario" placeholder="Ej: 9999"
+                       type="text" maxlength="4" required >
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="exampleInputEmail1">Correo</label>
+                <input class="form-control" id="correo_electronico" name="correo_electronico" placeholder="Ej: Maipu@Maipu.cl"
+                       type="email" maxlength="100" required >
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-block btn-lg btn-info">Solicitar Recuperar Contraseña</button>
+            }
+
+        </div>
+
+</div>
+
+                </div>
+            </div>
+        </div>
+
+
+<script type="text/javascript">
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+
+                    $('#modals1').modal('hide')
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+
+</script>

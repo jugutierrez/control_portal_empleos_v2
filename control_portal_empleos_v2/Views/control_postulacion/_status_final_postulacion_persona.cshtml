@@ -1,0 +1,108 @@
+﻿<div class="row">
+    <div class="col-md-12">
+      
+        <div class="text-center well">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        Estado final Postulante
+                    </h1><h1>
+                        <span id="cambiar" name="cambiar" class="label label-success">@ViewBag.nombre_estado_actual_postulante</span>
+                    </h1>
+
+
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="toggle-visibility btn btn-info btn-lg" data-target="#post-detailsxxx">Deseo modificar mi seleccion</button>
+                    <hr />
+                </div>
+            </div>
+@using (Html.BeginForm("reversa_estado_postulante", "control_postulacion", FormMethod.Post, new { @id = "form3" }))
+            {
+            <div class="well" id="post-detailsxxx" style="display: none;">
+                
+           
+                @Html.Hidden("id_oferta", (Int32)ViewBag.id_oferta)
+                @Html.Hidden("id_persona", (Int32)ViewBag.id_persona)
+                <div class="row">
+                    <h1>Modificar Estado Final</h1>
+                    <div class="alert alert-danger alert-dismissable">
+                        <h2 class="text-center text-muted">
+                            Recuerde:&nbsp; se enviara un correo al postulante indicando los motivos
+                            de su revocacion de eleccion
+                        </h2>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("si_correo", true, new { id = "si_correo", name = "si_correo" })Recuerde:&nbsp; seenviara un correo informando  los motivos al &nbsp;postulante.
+                        
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">Agregue el Motivo de esta nueva Evaluacion.</label>
+                            <textarea class="form-control" id="motivo_cambio" name="motivo_cambio" rows="5" maxlength="2000" style="resize:none"
+                                      placeholder="EJ: debido a que aparece este postulante posee x motivo" type="text"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-block btn-info btn-lg">Volver a evaluar al Postulante</button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+}
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(".toggle-visibility").click(function () {
+
+        var target_selector = $(this).attr('data-target');
+        var $target = $(target_selector);
+
+        if ($target.is(':hidden')) {
+            $target.show();
+        }
+        else {
+
+            $target.hide();
+        }
+
+        console.log($target.is(':visible'));
+
+
+    });
+
+
+    $("#form3").on("submit", function (e)
+{
+    e.preventDefault();
+
+    $.ajax({
+        url: this.action,
+        type: this.method,
+        data: $(this).serialize()
+
+    })
+    .success(function(result){
+        $('#content').html(result);
+    })
+        .error(function(xhr,status)
+        {
+            alert(status);
+        })
+
+
+    });
+
+
+
+</script>

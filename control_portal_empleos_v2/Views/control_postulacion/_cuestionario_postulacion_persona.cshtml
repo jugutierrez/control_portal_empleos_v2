@@ -1,0 +1,85 @@
+﻿
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Cuestionario Respondido por el usuario</h1>
+            </div>
+        </div>
+ 
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <h3 class="text-center">Preguntas con alternativas</h3>
+                    <hr>
+                    @if (ViewBag.id_pregunta1.Length != 0)
+                    {
+                        for (int i = 0; i < ViewBag.id_pregunta1.Length; i++)
+                        {
+                            <h2>Pregunta n°:&nbsp; @i</h2>
+                            <ul class="list-group text-warning">
+                                <li class="list-group-item list-group-item-warning">
+                                    <h3 class="text-muted">Pregunta:&nbsp;</h3>
+                                    <h5 class="text-muted">@ViewBag.nombre_pregunta_1[i]</h5>
+                                </li>
+                                <li class="list-group-item list-group-item-warning">
+                                    <h3 class="text-muted">Respuesta:&nbsp;</h3>
+                                    <h5 class="text-muted">@ViewBag.nombre_respuesta_1[i]</h5>
+                                </li>
+                            </ul>
+                            <hr>
+                        }
+                    }
+                    else
+                    {  <ul class="list-group text-warning">
+                        
+                        <li class="list-group-item list-group-item-warning">
+                            <h3 class="text-muted">el cuestionario no posee preguntas de seleccion</h3>
+                         
+                        </li>
+                    </ul>
+                       
+                    }
+                    
+                    
+                 
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="well">
+                    <h3 class="text-center">Preguntas con Respuesta libre</h3>
+                    <hr>
+                    
+                    @if (ViewBag.id_pregunta2.Length != 0)
+            {
+                for (int i = 0; i < ViewBag.id_pregunta2.Length; i++)
+                {<h2>Pregunta n°:&nbsp; @i</h2>
+                            <ul class="list-group text-danger">
+                                <li class="list-group-item list-group-item-warning">
+                                    <h3 class="text-muted">Pregunta:&nbsp;</h3>
+                                    <h5 class="text-muted">@ViewBag.nombre_pregunta_2[i]</h5>
+                                </li>
+                                <li class="list-group-item list-group-item-warning">
+                                    <h3 class="text-muted">Respuesta:&nbsp;</h3>
+                                    <h5 class="text-muted">@ViewBag.nombre_respuesta_2[i]</h5>
+                                </li>
+                            </ul>
+                            <hr>
+                        }
+                    }
+                    else
+                    {
+                        <ul class="list-group text-warning">
+
+                            <li class="list-group-item list-group-item-warning">
+                                <h3 class="text-muted">el cuestionario no posee preguntas de respuesta libre</h3>
+
+                            </li>
+                        </ul>
+                    }
+                  
+                </div>
+            </div>
+            
+        </div>
+ 
+           

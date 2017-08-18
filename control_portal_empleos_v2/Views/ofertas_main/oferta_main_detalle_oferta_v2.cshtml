@@ -1,0 +1,639 @@
+﻿@model control_portal_empleos_v2.Models.ofertas
+@{
+    ViewBag.Title = "oferta_main_detalle_oferta_v2";
+}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '/control_informes/postulados_por_oferta/@Html.DisplayFor(model => Model.id_oferta)',
+            data: '{}',
+            success: function (chartsdata) {
+
+
+
+                var data = new google.visualization.DataTable();
+
+
+                data.addColumn('string', 'nombre_estado_postulacion');
+                data.addColumn('number', 'cantidad_postulados');
+                var h = 0;
+
+                if (chartsdata.length < 1) {
+                    document.getElementById('chartdiv').innerHTML = "<h2> aun no existen postulados en esta oferta. </h2>"
+                }
+                else {
+                    for (var i = 0; i < chartsdata.length; i++) {
+                        h += chartsdata[i].cantidad_postulados;
+                        data.addRow([chartsdata[i].nombre_estado_postulacion, chartsdata[i].cantidad_postulados]);
+                    }
+
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                    chart.draw(data,
+                      {
+                          title: "Usuarios Postulados en la oferta(Total: " + h + ")",
+                          position: "top",
+                          fontsize: "15px",
+                          chartArea: { width: '90%' },
+                      });
+                }
+            },
+            error: function () {
+                document.getElementById('chartdiv').innerHTML = "<h2> Ocurrio un Problema Para Cargar los datos , favor refresque la pagina </h2>"
+
+            }
+        });
+    })
+
+</script>
+
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Detalle Oferta</h1>
+        
+            </div>
+        </div>
+        </div>
+</div>
+  
+        <div class="row">
+            <div class="col-md-4">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h4>
+                                Resumen Cantidad Postulados<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Podra ver el listado de todos los postulados de esta oferta y gestionarlos."></i>
+                            </h4>
+@if ((bool)ViewBag.ver_postulantes == true)
+{
+                            <a href="@Url.Action("index", "control_postulacion", new { id = @Html.DisplayFor(model => Model.id_oferta) })" class="btn btn-block btn-lg btn-info">Ver Postulantes <i class="fa fa-group text-default"></i></a>
+}
+                            <hr />
+                            <div id="chartdiv" class="text-center"></div>
+                        </div>
+                      
+                    
+                            <div class="col-md-12">
+                                <hr />
+                                <a target="_blank" href="@Url.Action("descarga_resumen_oferta_pdf","ofertas_main",new { id = @Html.DisplayFor(model => model.id_oferta), nombre_oferta = @Html.DisplayFor(model => model.nombre_oferta) })" class="btn btn-block btn-lg btn-info">Descargar Copia Oferta <i class="fa  fa-download text-default"></i></a>
+                                <hr />
+                            </div>
+                    
+                            <div class="col-md-12">
+
+                                <div id="btn1" class="btn1" data-url="@Url.Action("preview_oferta", new { id = Html.DisplayFor(model => model.id_oferta) })">
+                                    <a data-toggle="modal" data-target="#mdsoporte" class="btn btn-block btn-lg btn-info">Previsualizar oferta <i class="fa text-default fa-desktop"></i></a>
+                                </div>
+
+                            </div>
+                        
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                           
+                                <h1>
+                              @Html.DisplayFor(model => model.nombre_oferta)
+                                    
+                                </h1>
+                            <hr />
+                          
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                <li class="list-group-item"><h4>Fecha Creacion:<small>@Html.DisplayFor(model => Model.fecha_creacion_oferta)</small></h4></li>
+                            </ul>
+                       
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                <li class="list-group-item"><h4>Ultima Actualizacion: <small>@Html.DisplayFor(model => Model.fecha_modificacion_oferta)</small></h4></li>
+                            </ul>
+                           
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <ul class="list-group">
+                                <li class="list-group-item text-center">
+
+
+
+                                    @if (ViewBag.id_estado_oferta_actual != null)
+                                    {
+                                        for (int i = 0; i < ViewBag.id_estado_oferta_control.Length; i++)
+                                        {
+                                            if (ViewBag.id_estado_oferta_actual == ViewBag.id_estado_oferta_control[i])
+                                            {
+
+
+                                                <h2>    @ViewBag.nombre_estado_oferta_control[i]</h2>
+
+
+                                            }
+
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <label>No se pudo obtener un estado</label>
+                                    }
+
+
+
+                                </li>
+                            </ul>
+
+
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <ul class="list-group">
+                                <li class="list-group-item text-center">
+@if ((Int32)ViewBag.oferta_inclusiva == 1)
+{
+                                    <h2> Esta Oferta es Apta para todo Publico</h2>
+}
+else
+{ <h2>  Esta Oferta NO es Apta para todo Publico</h2>}
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+                        <div class="col-md-6">
+
+                           
+                               
+
+                                  
+
+                                        <div id="btn1" class="btn1" data-url="@Url.Action("actualiza_estado_oferta", new { id = Html.DisplayFor(model => model.id_oferta), id_oferta_estado = ViewBag.id_estado_oferta_actual })">
+                                            <a data-toggle="modal" data-target="#mdsoporte" class="btn btn-block btn-lg btn-info">Estado Oferta</a>
+                                        </div>
+
+                                 
+
+                               
+
+                            
+
+
+
+                        </div>
+                    
+                            <div class="col-md-6">
+                                <div id="btn1" class="btn1" data-url="@Url.Action("vista_activador_inclusividad_oferta", new { id = Html.DisplayFor(model => model.id_oferta) })">
+                                    <a data-toggle="modal" data-target="#mdsoporte" class="btn btn-block btn-info btn-lg">Inclusividad oferta <i class="fa text-default fa-wheelchair"></i></a>
+                                </div>
+                            </div>
+                            }
+
+                    </div>
+               
+              
+                  
+                 
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="section">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="well">
+
+
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading clearfix">
+
+
+                                            <h4  class="text-muted">
+                                                Categorias <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Utiliza Los Filtros para realizar una busqueda mas exacta a tu perfil de persona que necesitas."></i>
+
+
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+                                                <div class="pull-right">
+                                                    <div id="btn1" class="btn1" data-url="/ofertas_main/agrega_vista_categorias_ofertas/@Html.DisplayFor(model => Model.id_oferta)">
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#mdsoporte">Agregar <i class="fa fa-lg text-default fa-plus-circle"></i></a>
+                                                    </div>
+                                                </div>
+}
+
+                                            </h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="panel-group" role="tablist">
+                                                <div class="panel panel-info clearfix text-center">
+                                                    <div id="reemplazar" class="reemplazar" data-url="/ofertas_main/vista_categorias_ofertas/@Html.DisplayFor(model => model.id_oferta)">
+                                                        <img src="~/Images/indicator.white.gif" /> Cargando ...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="well">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading clearfix">
+
+
+                                            <h4 class="text-muted">
+                                                Documentos <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Utiliza Los Filtros para realizar una busqueda mas exacta a tu perfil de persona que necesitas."></i>
+
+
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+                                                <div class="pull-right">
+                                                    <div id="btn1" class="btn1" data-url="/ofertas_main/agrega_vista_documentos_ofertas/@Html.DisplayFor(model => Model.id_oferta)">
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#mdsoporte">Agregar <i class="fa fa-lg text-default fa-plus-circle"></i></a>
+                                                    </div>
+                                                </div>
+}
+
+                                            </h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="panel-group" role="tablist">
+                                                <div class="panel panel-info clearfix text-center">
+                                                    <div id="reemplazar" class="reemplazar" data-url="/ofertas_main/vista_documentos_ofertas/@Html.DisplayFor(model => model.id_oferta)">
+                                                        <img src="~/Images/indicator.white.gif" /> Cargando ...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="col-md-12">
+
+                            <h1>
+                                Datos de la oferta <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Utiliza Los Filtros para realizar una busqueda mas exacta a tu perfil de persona que necesitas."></i>
+                            </h1>
+                        </div>
+                        <div class="well">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputEmail1">Nombre oferta</label>
+                                        <input class="form-control" id="nombre_oferta" name="nombre_oferta" placeholder="EJ:Juan"
+                                               type="text" value="@Html.DisplayFor(model => model.nombre_oferta)" disabled />
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputPassword1">jornada oferta</label>
+                                        @Html.DropDownList("id_jornada_oferta", null, "Seleccione...", new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputPassword1">Tipo de Contrato</label>
+                                        @Html.DropDownList("id_contrato_oferta", null, "Seleccione...", new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputPassword1">Tipo de oferta</label>
+                                        @Html.DropDownList("id_tipo_oferta", null, "Seleccione...", new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputPassword1">Direccion</label>
+                                        @Html.DropDownList("id_direccion", null, "Seleccione...", new { @class = "form-control", @disabled = "disabled" })
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputPassword1">Departamento</label>
+                                        @Html.DropDownList("id_departamento", null, "Seleccione...", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputPassword1">area</label>
+                                        @Html.DropDownList("id_area", null, "Seleccione...", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+
+
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputEmail1">Monto oferta</label>
+                                        <input class="form-control" id="monto_oferta" name="monto_oferta" placeholder="EJ:800000"
+                                               type="text" value="@Html.DisplayFor(model => model.monto_oferta)" disabled />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputPassword1">Descripcion Oferta</label>
+                                        <textarea class="form-control" id="descripcion_oferta" name="descripcion_oferta" rows="5" maxlength="2000" style="resize:none"
+                                                  placeholder="EJ: bla bla bla bla" type="text" disabled>@Html.DisplayFor(model => model.descripcion_oferta)</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+                                    <div class="col-md-6 col-md-offset-3 text-center">
+                                        <div id="btn1" class="btn1" data-url="@Url.Action("actualiza_datos_oferta", new { id = Html.DisplayFor(model => model.id_oferta) })">
+                                            <a data-toggle="modal" data-target="#mdsoporte" class="btn btn-block btn-lg btn-info">Deseo Actualizar mis Datos <i class="-circle fa fa-edit fa-lg text-default"></i></a>
+                                        </div>
+
+                                    </div>
+}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="well">
+
+                                <div class="panel panel-info">
+                                    <div class="panel-heading clearfix">
+
+
+                                        <h4 class="text-primary">
+                                            FILTROS <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Utiliza Los Filtros para realizar una busqueda mas exacta a tu perfil de persona que necesitas."></i>
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+
+                                            if (Model.id_especificacion_oferta != 0)
+                                            {
+                                                <div class="pull-right">
+                                                    <div id="btn1" class="btn1" data-url="/ofertas_main/especificacion_desactiva/@Html.DisplayFor(model => Model.id_oferta)">
+                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">Desactivar <i class="-circle fa fa-lg text-default fa-toggle-off"></i></a>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="pull-right">
+                                                    <div id="btn1" class="btn1" data-url="/ofertas_main/especificacion_activa/@Html.DisplayFor(model => Model.id_oferta)">
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#mdsoporte">Activar <i class="-circle fa fa-lg text-info fa-toggle-on"></i></a>
+                                                    </div>
+                                                </div>
+                                            }
+}
+                                        </h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="panel-group" role="tablist">
+                                            <div class="panel panel-info">
+                                                <div id="reemplazar" class="reemplazar" data-url="/ofertas_main/vista_especificaciones_habilidades/@Html.DisplayFor(model => model.id_oferta)">
+                                                    <img src="~/Images/indicator.white.gif" /> Cargando ...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="well">
+
+
+                                <div class="panel panel-info">
+                                    <div class="panel-heading clearfix">
+
+                                        <h4 class="text-primary">
+                                            Cuestionario <i class="fa fa-2x fa-question-circle" data-toggle="tooltip" data-placement="right" title="Recuerda que el buscador traera todos aquellos candidatos que contengan la palabra ha sido ingresada en cualquier parte de su currículum. Para búsquedas más específicas utiliza los filtros avanzados."></i>
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+
+                                            if (Model.id_cuestionario != 0)
+                                            {
+
+                                                <div class="pull-right">
+                                                    <div class="btn-group">
+                                                        <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_agrega_pregunta/@Html.DisplayFor(model => Model.id_cuestionario)">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-primary" data-toggle="modal" data-target="#mdsoporte">Agregar <i class="fa fa-lg text-default fa-plus-circle"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <div id="btn1" class="btn1" data-url="/ofertas_main/cuestionario_desactiva/@Html.DisplayFor(model => Model.id_oferta)">
+
+                                                            <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">Desactivar <i class="-circle fa fa-lg text-default fa-toggle-off"></i></a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="pull-right">
+                                                    <div class="btn-group">
+                                                        <div id="btn1" class="btn1" data-url="/ofertas_main/cuestionario_activa/@Html.DisplayFor(model => Model.id_oferta)">
+                                                            <a class="btn btn-primary" data-toggle="modal" data-target="#mdsoporte">Activar <i class="-circle fa fa-lg text-info fa-toggle-on"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+}
+                                        </h4>
+
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="panel-group" role="tablist">
+                                            <div class="panel panel-info">
+                                                <div id="reemplazar" class="reemplazar" data-url="/ofertas_main/vista_cuestionarios/@Html.DisplayFor(model => model.id_oferta)">
+                                                    <img src="~/Images/indicator.white.gif" /> Cargando ...
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+
+
+
+
+
+
+                $(document).ready(function () {
+
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
+
+
+                $("#my-form").on("submit", function (e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: this.action,
+                        type: this.method,
+                        data: $(this).serialize(),
+                        success: function (response) {
+                            if (response != null && response.success) {
+                                alert(response.responseText);
+                                $(".reemplazar").each(function (index3, item) {
+                                    var url = $(item).data("url");
+                                    if (url && url.length > 0) { $(item).load(url); }
+
+                                })
+                                $('#mdsoporte').modal('hide')
+
+                            } else {
+                                // DoSomethingElse()
+                                alert(response.responseText);
+                            }
+                        },
+                        error: function (response) {
+                            alert("error!");  //
+                        }
+
+
+
+
+                    });
+
+                });
+
+                $(function () {
+
+                    $(document).ready(function (e) {
+
+                        $(".reemplazar").each(function (index3, item) {
+                            var url = $(item).data("url");
+                            if (url && url.length > 0) { $(item).load(url); }
+                        })
+
+                    });
+
+                    $('#id_direccion').change(function () {
+
+                        $('#id_departamento').empty();
+                        $('#id_departamento').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+                        $('#id_departamento').attr('readonly', true);
+                        $('#id_departamento').attr('disabled', false);
+                        $('#id_area').empty();
+                        $('#id_area').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+                        $('#id_area').attr('readonly', true);
+                        $('#id_area').attr('disabled', true);
+                        $.ajax({
+                            type: "GET",
+                            url: "/ofertas_main/GetStatesByCountryId",
+                            datatype: "Json",
+                            data: { countryId: $('#id_direccion').val() },
+                            success: function (data) {
+                                if (data != null) {
+
+                                    $.each(data, function (index, value2) {
+                                        $('#id_departamento').append('<option value="' + value2.id_departamento + '">' + value2.nombre_departamento + '</option>');
+                                    });
+                                    $('#id_departamento').attr('readonly', false);
+                                    $('#id_departamento').attr('disabled', false);
+                                }
+                            }
+                        });
+                    });
+                    $('#id_departamento').change(function () {
+
+                        $('#id_area').empty();
+                        $('#id_area').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+                        $('#id_area').attr('readonly', true);
+                        $('#id_area').attr('disabled', false);
+                        $.ajax({
+                            type: "GET",
+                            url: "/ofertas_main/GetStatesByCountryId2",
+                            datatype: "Json",
+                            data: { countryId: $('#id_departamento').val() },
+                            success: function (data) {
+                                if (data != null) {
+                                    $.each(data, function (index, value2) {
+                                        $('#id_area').append('<option value="' + value2.id_area + '">' + value2.nombre_area + '</option>');
+                                    });
+                                    $('#id_area').attr('readonly', false);
+                                    $('#id_area').attr('disabled', false);
+                                }
+                            }
+                        });
+                    });
+                });
+
+
+
+
+            </script>

@@ -1,0 +1,59 @@
+﻿@model control_portal_empleos_v2.Models.super_modelo_curriculum
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+      rel="stylesheet" type="text/css">
+<link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+      rel="stylesheet" type="text/css">
+<div class="well">
+    <div class="row">
+        <div class="col-xs-7">
+            <div class="well">
+                <h2>Historial de Postulaciones</h2>
+                <h3>@Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) @Html.DisplayFor(model => model.persona_curriculum_vista.apellido_paterno_persona) @Html.DisplayFor(model => model.persona_curriculum_vista.apellido_materno_persona)</h3>
+            </div>
+        </div>
+        <div class="col-xs-5">
+            <div class="well">
+                <h2>N° Postulaciones Anteriores : @ViewBag.cantidad_postulaciones</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="list-group text-muted">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-xs-4 text-center"><h2>Nombre Oferta</h2></div>
+                    <div class="col-xs-4 text-center"><h2>Fecha Postulacion</h2></div>
+                    <div class="col-xs-4 text-center"><h2>Estado Postulacion</h2></div>
+                </div>
+            </li>
+            @if (ViewBag.nombre_oferta != null)
+            {
+                for (int i = 0; i < ViewBag.nombre_oferta.Length; i++)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-4 text-center">@ViewBag.nombre_oferta[i]</div>
+                            <div class="col-xs-4 text-center">@ViewBag.fecha_postulacion[i]</div>
+                            <div class="col-xs-4 text-center">@ViewBag.estado_final_postulacion[i]</div>
+                        </div>
+                    </li>
+
+                }
+            }
+            else
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <label>NO posee registros anteriores</label>
+                    </div>
+                </li>
+            }
+
+        </ul>
+    </div>
+
+</div>
+

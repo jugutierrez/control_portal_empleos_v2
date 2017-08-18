@@ -1,0 +1,75 @@
+﻿
+@using (Html.BeginForm("actualiza_clave_usuario", "control_cuenta", FormMethod.Post, new { @id = "my-form" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true)
+    @Html.Hidden("id_usuario", (Int32)ViewBag.id)
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well">
+            <h2 class="text-center">Cambio de Contraseña</h2>
+            <p></p>
+            <ul class="list-group">
+             
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <label class="control-label" for="exampleInputEmail1">Tu nueva clave</label>
+                        <input class="form-control" id="clave_usuario" name="clave_usuario" placeholder="Ingresa tu nueva clave" type="password">
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <label class="control-label" for="exampleInputEmail1">Reingresa tu nueva clave</label>
+                        <input class="form-control" id="clave_usuario_repite" name="clave_usuario_repite" placeholder="Repite tu nueva clave" type="password">
+                    </div>
+                </li>
+            </ul>
+            <input type="submit" value=">Actualizar" class="btn btn-block btn-lg btn-primary" />
+        </div>
+    </div>
+</div>
+
+
+
+
+                       
+        
+}
+
+
+
+<script type="text/javascript">
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                 
+                    window.location.reload();
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+
+</script>

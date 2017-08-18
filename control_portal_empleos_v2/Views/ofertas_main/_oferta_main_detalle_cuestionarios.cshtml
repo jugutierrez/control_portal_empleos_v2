@@ -1,0 +1,99 @@
+﻿@model control_portal_empleos_v2.Models.modelo_vista_cuestionarios
+
+
+<table class="table">
+    @if (Model.id_cuestionario != 0)
+{
+    if (Model.cuestionarios_pregunta.Count() != 0)
+    {
+
+        foreach (var item in Model.cuestionarios_pregunta)
+        {
+            <ul class="list-group tex">
+                <li class="list-group-item active clearfix">
+                    @Html.DisplayFor(model => item.nombre_pregunta) 
+@if ((bool)ViewBag.editar_ofertas == true)
+{<div class="pull-right">
+                        <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_elimina_pregunta/@Html.DisplayFor(model => item.id_cuestionario_pregunta)">
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">Eliminar <i class="-circle fa fa-lg text-default fa-close"></i></a>
+                        </div>
+                    </div>
+}
+@if (item.id_tipo_pregunta == 1)
+{
+    if ((bool)ViewBag.editar_ofertas == true)
+    {
+                    <div class="pull-right">
+                        <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_agrega_respuesta/@Html.DisplayFor(model => item.id_pregunta)">
+                            <a class="btn btn-info" data-toggle="modal" data-target="#mdsoporte">Agregar <i class="-circle fa fa-lg text-default fa-plus-circle"></i></a>
+                        </div>
+                    </div>
+        }
+    }
+                </li>
+
+                @if (item.id_tipo_pregunta == 0)
+                {
+                    <li class="list-group-item clearfix">
+                        <label>La respuesta es entregada por el usuario</label>
+                    </li>
+                }
+                else
+                {
+                    if (Model.preguntas_respuesta.Count() != 0)
+                    {
+                        foreach (var item2 in Model.preguntas_respuesta)
+                        {
+                            if (item.id_pregunta == item2.id_pregunta)
+                            {
+                        <li class="list-group-item clearfix ">
+                                    @Html.DisplayFor(model => item2.respuestas.nombre_respuesta)
+@if ((bool)ViewBag.editar_ofertas == true)
+{
+                                    <div class="pull-right">
+                                        <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_elimina_respuesta/@Html.DisplayFor(model => item2.id_pregunta_respuesta)">
+                                            <a class="btn btn-danger" data-toggle="modal" data-target="#mdsoporte">eliminar <i class="-circle fa fa-lg text-default fa-close"></i></a>
+                                        </div>
+                                    </div>
+                            }
+                                </li>
+                            
+                        }
+
+                    }
+                }
+                    else
+                    {
+                        <label> ingresa respuestas</label>
+                    }
+                }
+            </ul>
+        }
+    }
+    else
+    {
+  <label> Ingresa Alguna Pregunta </label> 
+    }
+    }
+    else
+    {
+    <label>active el cuestionario para poder agregar preguntas</label>
+    }
+
+</table>
+
+
+<script>
+
+    $(".btn1").on("click", function () {
+        var url = $(this).data('url');
+        $(".modaldiv").html("Cargando...");
+        $.get(url, function (data) {
+
+
+            $(".modaldiv").html(data);
+
+
+        });
+    });
+</script>

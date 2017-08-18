@@ -1,0 +1,459 @@
+﻿@model control_portal_empleos_v2.Models.usuarios
+
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</div>
+
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="well">
+                                <h2 class="text-center">Solicitar Usuario del Sistema</h2>
+                                <blockquote>
+                                    <p>Al Solicitar un Usuario Recuerde:</p>
+                                    <footer>El Ingreso de sus datos nos ayudara a agilizar el proceso</footer>
+                                    <footer>
+                                        Un Encargado Habilitara la Cuenta dentro de un Corto Periodo de tiempo
+                                        , previo contacto con usted
+                                    </footer>
+                                    <footer>En Caso de algun problema Contactar los Siguientes Anexos: -6385 -8350</footer>
+                                </blockquote>
+                                <div class="row">
+
+
+                                    <ul class="nav nav-tabs nav-justified" role="tablist">
+                                        <li role="presentation" class="active">
+                                            <a href="#step1" data-toggle="tab" aria-controls="Datos del Usuario" role="tab" title="Datos del Usuario">
+                                                <span class="round-tab">
+                                                    <i class="fa fa-fw fa-lg fa-user-plus"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation" class="disabled">
+                                            <a href="#step2" data-toggle="tab" aria-controls="Datos de Cuenta" role="tab" title="Datos de Cuenta">
+                                                <span class="round-tab">
+                                                    <i class="fa fa-fw fa-lg -plus fa-edit"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li role="presentation" class="disabled">
+                                            <a href="#complete" data-toggle="tab" aria-controls="Finalizado" role="tab" title="Finalizado">
+                                                <span class="round-tab">
+                                                    <i class="fa fa-fw fa-lg -plus fa-check"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="well">
+
+                                  
+
+                                  @using (Html.BeginForm("create_registro", "Login", FormMethod.Post, new { @id = "my-form" }))
+
+                                  {
+
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+                                    <div class="tab-content">
+                                        
+                                        <div class="tab-pane active" role="tabpanel" id="step1">
+                                            <div class="step1">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputEmail1">Nombres</label>
+                                                    <input class="form-control" id="nombre_usuario" name="nombre_usuario" placeholder="EJ:Juan"
+                                                           type="text">
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label" for="exampleInputEmail1">Apellido Paterno</label>
+                                                            <input type="text" class="form-control" id="apellido_paterno_usuario" name="apellido_paterno_usuario" placeholder="Ej: Gutierrez ">
+                                                        </div>
+                                                        <!-- /input-group -->
+                                                    </div>
+                                                    <!-- /.col-lg-6 -->
+                                                    <div class="col-lg-6">
+                                                        <label class="control-label" for="exampleInputEmail1">Apellido Materno</label>
+                                                        <input type="text" class="form-control" id="apellido_materno_usuario" name="apellido_materno_usuario" placeholder="Ej: Ascencio">
+                                                        <!-- /input-group -->
+                                                    </div>
+                                                    <!-- /.col-lg-6 -->
+                                                </div>
+                                                   
+                               
+                         
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Rut</label>
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <input class="form-control" id="rut_usuario" name="rut_usuario" placeholder="Ej: 18356397" type="text" onkeypress="return soloNumeros(event)" maxlength="9">
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <input class="form-control text-center" id="dig_rut_usuario" name="dig_rut_usuario" placeholder="Ej: k" type="text"  maxlength="1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Correo Electronico</label>
+                                                    <input class="form-control" id="correo_electronico_usuario" name="correo_electronico_usuario"
+                                                           placeholder="EJ: maipu@maipu.cl" type="email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Anexo</label>
+                                                    <input class="form-control" id="anexo_usuario" name="anexo_usuario" onkeypress="return soloNumeros(event)" maxlength="4"
+                                                           placeholder="EJ: 02-5555555" type="text">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Direccion</label>
+                                                    @Html.DropDownList("id_direccion", null, "Seleccione...", new { @class = "form-control" })
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Departamento</label>
+                                                    @Html.DropDownList("id_departamento", null, "Seleccione...", new { @class = "form-control", @readonly = "readonly" })
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="exampleInputPassword1">Area</label>
+                                                    @Html.DropDownList("id_area", null, "Seleccione...", new { @class = "form-control", @readonly = "readonly" })
+
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-block btn-info btn-lg next-step">
+                                                    Continuar
+                                                    <span class="badge">
+                                                        <i class="fa fa-lg fa-arrow-circle-right"></i>
+                                                    </span>
+                                                </button>
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane " role="tabpanel" id="step2">
+                                            <div class="step2">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-block btn-info btn-lg prev-step">
+
+                                                        <span class="badge">
+                                                            <i class="fa fa-lg -square-o fa fa-arrow-circle-o-left"></i>
+                                                        </span> Volver
+                                                    </button>
+                                                </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">Cuenta de Usuario</label>
+                                                        <input class="form-control" id="nombre_cuenta_usuario" name="nombre_cuenta_usuario"
+                                                               placeholder="EJ: maipu@maipu.cl" type="text">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1">Contraseña</label>
+                                                        <input class="form-control" id="clave_usuario" name="clave_usuario"
+                                                               placeholder="EJ: maipu@maipu.cl" type="password">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="exampleInputPassword1"> Repita su Contraseña</label>
+                                                        <input class="form-control" id="clave_usuario_repite" name="clave_usuario_repite"
+                                                               placeholder="EJ: maipu@maipu.cl" type="password">
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        <button type="submit" id="verifica_registrar" class="btn btn-block  btn-lg btn-success">
+                                                            Solicitar Usuario<i class="fa fa-lg  fa-check-square-o fa-fw "></i>
+                                                        </button>
+
+                                                    </div>
+
+
+                                                </div>
+                                        </div>
+                                        
+                                        <div class="tab-pane" role="tabpanel" id="complete">
+                                            <div class="step44">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="well">
+                                                            <h1 class="text-center">Solicitud de Usuario</h1>
+                                                            <div class="alert alert-dismissable alert-info">
+                                                                <h1 class="text-center text-primary">¡Te has registrado Exitosamente!</h1>
+                                                            </div>
+                                                            <h2 class="text-center text-primary">
+                                                                En breve un administrador se pondra en contacto contigo para realizar
+                                                                la activacion de la cuenta
+                                                            </h2>
+                                                            <div class="well">
+                                                                <div class="row">
+                                                                    <div class="col-md-8 col-md-offset-2">
+                                                                        <h1 class="text-center">Recuerda:</h1>
+                                                                        <blockquote>
+                                                                            <p>Datos Importantes Sobre tu Cuenta</p>
+                                                                            <footer>Es personal e instranferible.</footer>
+                                                                            <footer>Cualquier accion realizada con ella es tu responsabilidad.</footer>
+                                                                            <footer>En Caso de algun problema Contactate con un administrador.</footer>
+                                                                        </blockquote>
+                                                                    </div>
+                                                                </div>
+                                                                <a class="btn btn-block btn-info btn-lg">Volver al Login    <i class="fa fa-angellist fa-fw fa-lg fa-spin text-primary"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                  }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    //Initialize tooltips
+                    $('.nav-tabs > li a[title]').tooltip();
+
+                    //Wizard
+                    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+                        var $target = $(e.target);
+
+                        if ($target.parent().hasClass('disabled')) {
+                            return false;
+                        }
+                    });
+
+                    $(".next-step").click(function (e) {
+
+                        var $active = $('.nav-tabs li.active');
+                        $active.addClass('disabled');
+                        $active.next().removeClass('disabled');
+                        nextTab($active);
+                        document.getElementById('nombre_cuenta_usuario').focus();
+
+                    });
+                    $(".prev-step").click(function (e) {
+
+                        var $active = $('.nav-tabs li.active');
+                        $active.addClass('disabled');
+                        $active.prev().removeClass('disabled');
+                        prevTab($active);
+                        document.getElementById('nombre_usuario').focus();
+
+                    });
+                });
+
+                function isValidEmailAddress(emailAddress) {
+                    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+                    return pattern.test(emailAddress);
+                }
+                function nextTab(elem) {
+                    var k = document.getElementById('nombre_usuario').value;
+                    var k1 = document.getElementById('apellido_paterno_usuario').value;
+                    var k2 = document.getElementById('apellido_materno_usuario').value;
+                    var k3 = document.getElementById('rut_usuario').value;
+                    var k4 = document.getElementById('dig_rut_usuario').value;
+                    var k5 = document.getElementById('correo_electronico_usuario').value;
+                    var k6 = document.getElementById('anexo_usuario').value;
+                    var k7 = document.getElementById('id_area').value;
+                    if (k == null || k == "") {
+                        alert("baia baia");
+                    }
+                    else if (k1 == null || k1 == "") {
+                        alert("baia baia2");
+                    }
+                    else if (k2 == null || k2 == "") {
+                        alert("baia baia3");
+                    }
+                    else if (k3 == null || k3 == "") {
+                        alert("baia baia4");
+                    }
+                    else if (k4 == null || k4 == "") {
+                        alert("baia baia5");
+                    }
+                    else if (k5 == null || k5 == "") {
+                      
+                        
+                        alert("baia baia6");
+                    }
+                  
+
+
+
+                    else if (!isValidEmailAddress(k5)) {
+                        alert("email not valid");
+                    }
+                    else if (k6 == null || k6 == "") {
+                        alert("baia baia7");
+                    }
+                    else if (k7 == null || k7 == "") {
+                        alert("baia baia2");
+                    }
+                    else {
+                        $(elem).next().find('a[data-toggle="tab"]').click();
+
+                    }
+                }
+                function prevTab(elem) {
+                    $(elem).prev().find('a[data-toggle="tab"]').click();
+                }
+
+                function verifica (){
+
+
+                    var k1 = document.getElementById('nombre_cuenta_usuario').value;
+                    var k2 = document.getElementById('clave_usuario').value;
+                    var k3 = document.getElementById('clave_usuario_repite').value;
+                    if (k1 == null || k1 == "") {
+                        alert("baia baia");
+                        return false;
+                    }
+                    
+                    else if (k2 == null || k2 == "") {
+                        alert("baia baia3");
+                        return false ;
+                    }
+                    else if (k3 == null || k3 == "") {
+                        alert("baia baia3");
+                        return false;
+                    }
+                    else if (k2 != k3) {
+                        alert("baia baia no igual");
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                  
+                }
+
+
+
+
+                function soloNumeros(e) {
+                    var key = window.Event ? e.which : e.keyCode
+                    return (key >= 48 && key <= 57)
+                }
+
+
+
+
+                $(document).ready(function (e) {
+                    $('#id_departamento').empty();
+                    $('#id_departamento').append('<option selected="selected" value="">Seleccione...</option>');
+                    $('#id_departamento').attr('readonly', true);
+                    $('#id_area').empty();
+                    $('#id_area').append('<option selected="selected" value="">Seleccione...</option>');
+                    $('#id_area').attr('readonly', true);
+                });
+
+
+
+                $("#my-form").on("submit", function (e) {
+                    var a = verifica(); 
+                    e.preventDefault();
+                    if( a == true)
+                   
+                    {
+                        $.ajax({
+                            url: this.action,
+                            type: this.method,
+                            data: $(this).serialize(),
+                            success: function (response) {
+                                if (response != null && response.success) {
+                                    alert(response.responseText);
+                                    var $active = $('.nav-tabs li.active');
+                                    $active.addClass('disabled');
+                                    $active.next().removeClass('disabled');
+                                    nextTab($active);
+
+                                } else {
+                                    // DoSomethingElse()
+                                    alert(response.responseText);
+
+                                }
+                            },
+                            error: function (response) {
+                                alert("error!");  //
+
+                            }
+
+
+
+
+                        });
+                    }
+                
+                    });
+                
+
+                $(function () {
+
+
+                    $('#id_direccion').change(function () {
+
+                        $('#id_departamento').empty();
+                        $('#id_departamento').append('<option selected="selected" value="">Seleccione...</option>');
+                        $('#id_departamento').attr('readonly', true);
+                        $('#id_area').empty();
+                        $('#id_area').append('<option selected="selected" value="">Seleccione...</option>');
+                        $('#id_area').attr('readonly', true);
+                        $.ajax({
+                            type: "GET",
+                            url: "/ofertas_main/GetStatesByCountryId",
+                            datatype: "Json",
+                            data: { countryId: $('#id_direccion').val() },
+                            success: function (data) {
+                                if (data != null) {
+
+                                    $.each(data, function (index, value2) {
+                                        $('#id_departamento').append('<option value="' + value2.id_departamento + '">' + value2.nombre_departamento + '</option>');
+                                    });
+                                    $('#id_departamento').attr('readonly', false);
+                                    $('#id_departamento').attr('readonly', false);
+                                }
+                            }
+                        });
+                    });
+                    $('#id_departamento').change(function () {
+
+                        $('#id_area').empty();
+                        $('#id_area').append('<option selected="selected" value="">Seleccione...</option>');
+                        $('#id_area').attr('readonly', true);
+                        $.ajax({
+                            type: "GET",
+                            url: "/ofertas_main/GetStatesByCountryId2",
+                            datatype: "Json",
+                            data: { countryId: $('#id_departamento').val() },
+                            success: function (data) {
+                                if (data != null) {
+                                    $.each(data, function (index, value2) {
+                                        $('#id_area').append('<option value="' + value2.id_area + '">' + value2.nombre_area + '</option>');
+                                    });
+                                    $('#id_area').attr('readonly', false);
+                                }
+                            }
+                        });
+                    });
+                });
+
+
+
+            </script>
+
+
+

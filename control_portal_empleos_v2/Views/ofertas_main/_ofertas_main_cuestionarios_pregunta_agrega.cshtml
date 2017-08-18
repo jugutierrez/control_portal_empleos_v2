@@ -1,0 +1,166 @@
+﻿@model control_portal_empleos_v2.Models.preguntas_vista
+
+
+    
+
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+             
+                <div class="well text-center">
+                    <div class="panel-heading">
+                        <h2>Agregar Pregunta</h2>
+
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li class="active">
+                                <a href="#tab1default" data-toggle="tab">Preguntas por defecto</a>
+                            </li>
+                            <li>
+                                <a href="#tab2default" data-toggle="tab">Nueva pregunta</a>
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="tab2default">
+
+                                @using (Html.BeginForm("Create_pregunta", "ofertas_main", FormMethod.Post, new { @id = "my-form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+
+                                    @Html.ValidationSummary(true)
+
+
+                                    @Html.Hidden("id_cuestionario", (Int32)ViewBag.id)
+                                    <ul class="list-group">
+
+                                        <li class="list-group-item">
+                                            <p> Escriba su nueva pregunta</p>
+                                            <input class="form-control" id="nombre_pregunta" name="nombre_pregunta" placeholder="EJ:Juan"
+                                                   type="text">
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <p>
+                                                Seleccione el tipo de pregunta
+                                            </p>
+                                            @Html.DropDownList("id_tipo_pregunta", (IEnumerable<SelectListItem>)ViewBag.id_tipo_pregunta, "Seleccione...", new { @class = "form-control" })
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <input type="submit" value="Agregar Nueva Pregunta" class="btn  btn-lg btn-block btn-info" />
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+
+
+
+                            <div class="tab-pane fade in active" id="tab1default">
+                                @using (Html.BeginForm("agrega_pregunta_defecto_cuestionario", "ofertas_main", FormMethod.Post, new { @id = "my-form2" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+
+                                    @Html.ValidationSummary(true)
+
+
+                                    @Html.Hidden("id_cuestionario", (Int32)ViewBag.id)
+                                    <ul class="list-group">
+
+                                        <li class="list-group-item">
+                                            <p> Seleccione Pregunta por defecto</p>
+                                      @Html.DropDownList("id_preguntas_defecto", (IEnumerable<SelectListItem>)ViewBag.id_preguntas_defecto, "Seleccione...", new { @class = "form-control" })
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <input type="submit" value="Agregar Nueva Pregunta" class="btn btn-lg  btn-block btn-info" />
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                        
+                    </div>
+                </div>
+                
+
+
+
+
+                <script type="text/javascript">
+
+                    $("#my-form").on("submit", function (e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            url: this.action,
+                            type: this.method,
+                            data: $(this).serialize(),
+                            success: function (response) {
+                                if (response != null && response.success) {
+                                    alert(response.responseText);
+                                    $(".reemplazar").each(function (index3, item) {
+                                        var url = $(item).data("url");
+                                        if (url && url.length > 0) { $(item).load(url); }
+
+                                    })
+                                    $('#modal1').modal('hide')
+
+                                } else {
+                                    // DoSomethingElse()
+                                    alert(response.responseText);
+                                }
+                            },
+                            error: function (response) {
+                                alert("error!");  //
+                            }
+
+
+
+
+                        });
+
+                    });
+                    $("#my-form2").on("submit", function (e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            url: this.action,
+                            type: this.method,
+                            data: $(this).serialize(),
+                            success: function (response) {
+                                if (response != null && response.success) {
+                                    alert(response.responseText);
+                                    $(".reemplazar").each(function (index3, item) {
+                                        var url = $(item).data("url");
+                                        if (url && url.length > 0) { $(item).load(url); }
+
+                                    })
+                                    $('#mdsoporte').modal('hide')
+
+                                } else {
+                                    // DoSomethingElse()
+                                    alert(response.responseText);
+                                }
+                            },
+                            error: function (response) {
+                                alert("error!");  //
+                            }
+
+
+
+
+                        });
+
+                    });
+
+
+                </script>

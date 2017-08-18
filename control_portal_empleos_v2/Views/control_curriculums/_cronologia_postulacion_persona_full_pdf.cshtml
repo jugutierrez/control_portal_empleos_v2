@@ -1,0 +1,57 @@
+﻿
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+      rel="stylesheet" type="text/css">
+<link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+      rel="stylesheet" type="text/css">
+<div class="well">
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <h2>Cronologia de acciones sobre el postulante por ofertas</h2>
+                <hr />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-group text-muted">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-3 text-center" style="border:dashed"><h4>fecha accion</h4></div>
+                        <div class="col-xs-3 text-center" style="border:dashed"><h4>nombre accion</h4></div>
+                        <div class="col-xs-6 text-center" style="border:dashed"><h4>Observacion</h4></div>
+                    </div>
+                </li>
+                @if (ViewBag.nombre_accion.Length > 0 || ViewBag.nombre_accion == null)
+                {
+
+                    for (int i = 0; i < ViewBag.nombre_accion.Length; i++)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3 text-center">@ViewBag.nombre_accion[i]</div>
+                                <div class="col-xs-3 text-center">@ViewBag.fecha_cronologia[i]</div>
+                                <div class="col-xs-6 text-center " style="word-wrap:break-word">@ViewBag.observacion_cronologia[i]</div>
+                            </div>
+                        </li>
+
+                    }
+
+
+                }
+                else
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <label>NO posee registros anteriores</label>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+        </div>
+
+    </div>
+</div>

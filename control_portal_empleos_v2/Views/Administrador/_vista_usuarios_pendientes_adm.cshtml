@@ -1,0 +1,54 @@
+﻿
+
+
+<div class="well">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+
+            <h2>Cuentas en espera para aprobacion</h2>
+
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-group text-muted">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-4 text-center" style="border:dashed"><h4>Nombre Completo @ViewBag.id</h4></div>
+                    <div class="col-xs-3 text-center" style="border:dashed"><h4>Correo Electronico</h4></div>
+                    <div class="col-xs-1 text-center" style="border:dashed"><h4>Anexo</h4></div>
+                    <div class="col-xs-2 text-center" style="border:dashed"><h4>Fecha Solicitud</h4></div>
+                    <div class="col-xs-2 text-center" style="border:dashed"><h4>Opciones</h4></div>
+                </div>
+            </li>
+            @if (ViewBag.nombre_oferta != null)
+            {
+                for (int i = 0; i < ViewBag.nombre_oferta.Length; i++)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-4 text-center">@ViewBag.nombre_oferta[i]</div>
+                            <div class="col-xs-4 text-center">@ViewBag.fecha_postulacion[i]</div>
+                            <div class="col-xs-4 text-center">@ViewBag.estado_final_postulacion[i]</div>
+                        </div>
+                    </li>
+
+                }
+            }
+            else
+            {
+                <li class="list-group-item">
+                    <div class="row text-center">
+                        <label>Sin Cuentas en espera por aprobar</label>
+                    </div>
+                </li>
+            }
+
+        </ul>
+    </div>
+
+</div>
+</div>

@@ -1,0 +1,109 @@
+﻿@model control_portal_empleos_v2.Models.super_modelo_curriculum
+<div class="well">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Revision de Postulante</h1>
+           
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm("actualiza_estado_postulante", "control_postulacion", FormMethod.Post, new { @id = "form1" }))
+    {
+        @Html.Hidden("id_oferta", (Int32)ViewBag.id_oferta)
+        @Html.Hidden("id_persona", (Int32)ViewBag.id_persona)
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group btn-group-justified btn-group-lg" data-toggle="buttons">
+                    <label id="a" class="btn btn-info">
+                        Seleccionar
+                        @Html.RadioButton("id_estado_postulacion",3, false, new { @id = "id_estado_postulacion", @name = "id_estado_postulacion" })
+                    </label>
+                
+
+            
+            @* <div class="btn-group btn-group-justified btn-group-lg" data-toggle="buttons">
+                                if (ViewBag.id_estado_postulacion != null)
+                {
+                    for (int i = 0; i < ViewBag.id_estado_postulacion.Length; i++)
+                    {
+
+
+
+
+
+                        <label id="@ViewBag.id_estado_postulacion[i]" class="btn btn-info" onclick="alerta2(this.id)">
+                            @ViewBag.nombre_estado_postulacion[i]
+                            @Html.RadioButton("id_estado_postulacion", (string)@ViewBag.id_estado_postulacion[i], false, new { @id = "id_estado_postulacion", @name = "id_estado_postulacion" })
+                        </label>
+
+                    }
+                }
+                else
+                {
+                    <label> no se pudieron cargar las cantidades</label>
+                }
+
+
+
+                            </div>*@
+
+     
+        
+                    <label id="a" class="btn btn-info">
+                        No apto para la oferta
+                        @Html.RadioButton("id_estado_postulacion", 2, false, new { @id = "id_estado_postulacion", @name = "id_estado_postulacion" })
+                    </label>
+                </div>
+            </div><hr>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+                <div class="form-group">
+                    <label class="control-label" for="exampleInputPassword1">Agregue alguna observacion que acotar:</label>
+                    <textarea class="form-control" id="observacion_cronologica" name="observacion_cronologica" rows="5" maxlength="2000" style="resize:none"
+                              placeholder="EJ: bla bla bla bla" type="text"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-block btn-info btn-lg">Cambiar estado Postulacion</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+<script>
+
+    $("#form1").on("submit", function (e)
+{
+    e.preventDefault();
+
+    $.ajax({
+        url: this.action,
+        type: this.method,
+        data: $(this).serialize()
+
+    })
+    .success(function(result){
+        $('#content').html(result);
+    })
+        .error(function(xhr,status)
+        {
+            alert(status);
+        })
+
+
+    });
+
+
+</script>

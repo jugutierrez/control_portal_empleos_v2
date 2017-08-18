@@ -1,0 +1,70 @@
+﻿@model control_portal_empleos_v2.Models.especificaciones_ofertas_idiomas
+
+
+
+
+    @using (Html.BeginForm("delete_especificacion_idioma", "ofertas_main", new { @id = @Html.DisplayFor(model => model.id_especificacion_oferta_idioma) }, FormMethod.Post, new { @id = "my-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="text-center well">
+                    <h2>Eliminar Idioma</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">El siguiente idioma sera eliminado de la oferta</li>
+                        <li class="list-group-item">
+                            <p>  Nombre del idioma:</p>
+                        @Html.DisplayFor(model => model.idiomas.nombre_idioma)</li>
+                        <li class="list-group-item">
+                            <p>  Nivel de dominio del idioma:</p> 
+                        @Html.DisplayFor(model => model.nivel_idiomas.nombre_nivel_idioma)</li>
+                        <li class="list-group-item">
+                            <p> Importancia del idioma para la oferta:</p> 
+                        @Html.DisplayFor(model => model.nivel_importancia.nombre_nivel_importancia)</li>
+                        <li class="list-group-item">
+                            <input type="submit" class="btn btn-block btn-danger" value="Eliminar" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+
+<script type="text/javascript">
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    $(".reemplazar").each(function (index3, item) {
+                        var url = $(item).data("url");
+                        if (url && url.length > 0) { $(item).load(url); }
+
+                    })
+                    $('#mdsoporte').modal('hide')
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+
+</script>
+

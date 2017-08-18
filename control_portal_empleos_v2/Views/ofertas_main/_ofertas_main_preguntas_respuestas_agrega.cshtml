@@ -1,0 +1,69 @@
+﻿@model control_portal_empleos_v2.Models.preguntas_respuestas
+
+@using (Html.BeginForm("create_respuesta_pregunta", "ofertas_main", FormMethod.Post, new { @id = "my-form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    
+        @Html.ValidationSummary(true)
+@Html.Hidden("id_pregunta" , (Int32)ViewBag.id)
+
+        
+
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="text-center well">
+                <h2>Agregar Respuesta</h2>
+                <ul class="list-group">
+                    <li class="list-group-item"><h2>Seleccione Alternativa a agregar: </h2></li>
+                    <li class="list-group-item">@Html.DropDownList("id_respuesta", (IEnumerable<SelectListItem>)ViewBag.id_respuesta, "Seleccione...", new { @class = "form-control" })</li>
+              
+            
+                    <li class="list-group-item">
+                        <input type="submit" value="Agregar" class="btn btn-lg btn-block btn-info" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<script type="text/javascript">
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    $(".reemplazar").each(function (index3, item) {
+                        var url = $(item).data("url");
+                        if (url && url.length > 0) { $(item).load(url); }
+
+                    })
+                    $('#modal1').modal('hide')
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+
+</script>

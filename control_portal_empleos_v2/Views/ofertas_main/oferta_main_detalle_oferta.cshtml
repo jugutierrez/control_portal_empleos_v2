@@ -1,0 +1,312 @@
+﻿@model control_portal_empleos_v2.Models.ofertas
+
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h1>
+                            page header
+                            <small>Subtext</small>
+                        </h1>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="row ">
+                    <div class="well clearfix">
+                        <div class="col-md-12">
+                            <input type="checkbox" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-onstyle="success" data-offstyle="danger"
+                                   value="0">
+                            <a class="btn btn-primary">Click me</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="well clearfix">
+                        <div class="col-md-12">
+                         @Html.ActionLink("Ver Postulados","index","control_postulacion")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="well clearfix">
+                        <div class="form-group clearfix">
+
+                            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-lg btn-warning">
+                                <i class="fa fa-fw fa-spin fa-star"></i>Guardar
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputEmail1">Nombre oferta</label>
+                            <input class="form-control" id="nombre_oferta" name="nombre_oferta" placeholder="EJ:Juan"
+                                   type="text" value="@Html.DisplayFor(model => model.nombre_oferta)">
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">Descripcion Oferta</label>
+                            <input class="form-control" id="descripcion_oferta" name="descripcion_oferta"
+                                   placeholder="EJ: Ascencio" type="text" value="@Html.DisplayFor(model => model.descripcion_oferta)">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">jornada oferta</label>
+                            @Html.DropDownList("id_jornada_oferta", null, "Seleccione...", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">Tipo de Contrato</label>
+                            @Html.DropDownList("id_contrato_oferta", null, "Seleccione...", new { @class = "form-control" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">Tipo de oferta</label>
+                            @Html.DropDownList("id_tipo_oferta", null, "Seleccione...", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">Direccion</label>
+                            @Html.DropDownList("id_direccion", null, "Seleccione...", new { @class = "form-control" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">Departamento</label>
+                            @Html.DropDownList("id_departamento", null, "Seleccione...", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputPassword1">area</label>
+                            @Html.DropDownList("id_area", null, "Seleccione...", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title">
+                            Especificaciones de la oferta
+                            @if (Model.id_especificacion_oferta != 0)
+                            {
+                                <div class="pull-right">
+                                    <div id="btn1" class="btn1" data-url="/ofertas_main/especificacion_desactiva/@Html.DisplayFor(model => Model.id_oferta)">
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#modal1">Desactivar</a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="pull-right">
+                                    <div id="btn1" class="btn1" data-url="/ofertas_main/especificacion_activa/@Html.DisplayFor(model => Model.id_oferta)">
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#modal1">Activar</a>
+                                    </div>
+                                </div>
+                            }
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="panel-group" role="tablist">
+                            <div class="panel panel-default">
+                                <div id="reemplazar" class="reemplazar" data-url="/ofertas_main/vista_especificaciones_habilidades/@Html.DisplayFor(model => model.id_oferta)">
+                                    <img src="~/Images/indicator.white.gif" /> Cargando ...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title">
+                            Cuestionario
+                            @if (Model.id_cuestionario != 0)
+                            {
+
+
+
+
+
+                                <div class="pull-right">
+                                    <div id="btn1" class="btn1" data-url="/ofertas_main/seleccion_agrega_pregunta/@Html.DisplayFor(model => Model.id_cuestionario)">
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#modal1">agregar</a>
+                                    </div>
+                                    <div id="btn1" class="btn1" data-url="/ofertas_main/cuestionario_desactiva/@Html.DisplayFor(model => Model.id_oferta)">
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#modal1">Desactivar</a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="pull-right">
+                                    <div id="btn1" class="btn1" data-url="/ofertas_main/cuestionario_activa/@Html.DisplayFor(model => Model.id_oferta)">
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#modal1">Activar</a>
+                                    </div>
+                                </div>
+                            }
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="panel-group" role="tablist">
+                            <div class="panel panel-default">
+                                <div id="reemplazar" class="reemplazar" data-url="/ofertas_main/vista_cuestionarios/@Html.DisplayFor(model => model.id_oferta)">
+                                    <img src="~/Images/indicator.white.gif" /> Cargando ...
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="fade modal" id="modal1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div id="modaldiv" class="modaldiv">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+
+
+
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    $(".reemplazar").each(function (index3, item) {
+                        var url = $(item).data("url");
+                        if (url && url.length > 0) { $(item).load(url); }
+
+                    })
+                    $('#modal1').modal('hide')
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+    $(function () {
+
+        $(document).ready(function (e) {
+
+            $(".reemplazar").each(function (index3, item) {
+                var url = $(item).data("url");
+                if (url && url.length > 0) { $(item).load(url); }
+            })
+        });
+
+        $('#id_direccion').change(function () {
+
+            $('#id_departamento').empty();
+            $('#id_departamento').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+            $('#id_departamento').attr('readonly', true);
+            $('#id_departamento').attr('disabled', false);
+            $('#id_area').empty();
+            $('#id_area').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+            $('#id_area').attr('readonly', true);
+            $('#id_area').attr('disabled', true);
+            $.ajax({
+                type: "GET",
+                url: "/ofertas_main/GetStatesByCountryId",
+                datatype: "Json",
+                data: { countryId: $('#id_direccion').val() },
+                success: function (data) {
+                    if (data != null) {
+
+                        $.each(data, function (index, value2) {
+                            $('#id_departamento').append('<option value="' + value2.id_departamento + '">' + value2.nombre_departamento + '</option>');
+                        });
+                        $('#id_departamento').attr('readonly', false);
+                        $('#id_departamento').attr('disabled', false);
+                    }
+                }
+            });
+        });
+        $('#id_departamento').change(function () {
+
+            $('#id_area').empty();
+            $('#id_area').append('<option selected="selected" value="' + null + '">Seleccione...</option>');
+            $('#id_area').attr('readonly', true);
+            $('#id_area').attr('disabled', false);
+            $.ajax({
+                type: "GET",
+                url: "/ofertas_main/GetStatesByCountryId2",
+                datatype: "Json",
+                data: { countryId: $('#id_departamento').val() },
+                success: function (data) {
+                    if (data != null) {
+                        $.each(data, function (index, value2) {
+                            $('#id_area').append('<option value="' + value2.id_area + '">' + value2.nombre_area + '</option>');
+                        });
+                        $('#id_area').attr('readonly', false);
+                        $('#id_area').attr('disabled', false);
+                    }
+                }
+            });
+        });
+    });
+
+
+
+</script>

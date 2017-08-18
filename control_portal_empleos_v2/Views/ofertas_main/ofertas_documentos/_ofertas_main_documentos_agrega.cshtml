@@ -1,0 +1,92 @@
+﻿<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+@using (Html.BeginForm("agrega_documentos_ofertas", "ofertas_main", FormMethod.Post, new { @id = "my-form" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true)
+        @Html.Hidden("id_oferta", (Int32)ViewBag.id)
+            <div class="text-center well">
+                <h1 class="text-center">Agregar Documento</h1>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                      
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DropDownList("id_documento", (IEnumerable<SelectListItem>)ViewBag.id_documento, "Seleccione...", new { @class = "form-control input-lg" })
+                    </li>
+                    <li class="list-group-item">
+                        
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DropDownList("id_relevancia_documento", (IEnumerable<SelectListItem>)ViewBag.id_relevancia_documento, "Seleccione...", new { @class = "form-control input-lg" })
+                    </li>
+                    <li class="list-group-item">
+                        <h3>Ingrese el nombre de su documento:</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" class="form-control" id="nombre_documento_oferta" name="nombre_documento_oferta" placeholder="EJ: diploma de carrera"  />
+                    </li>
+                    <li class="list-group-item">
+                        <h3>Ingrese el enlace del documento:</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" class="form-control" id="enlace_documento_oferta" name="enlace_documento_oferta" placeholder="EJ: https://www.google.cl" />
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-block btn-info btn-lg">Agregar</button>
+
+
+
+                            </div>
+                        </div>
+                    </li>
+                 
+                </ul>
+            </div>
+}
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $("#my-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                    $(".reemplazar").each(function (index3, item) {
+                        var url = $(item).data("url");
+                        if (url && url.length > 0) { $(item).load(url); }
+
+                    })
+                    $('#modal1').modal('hide')
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+
+</script>

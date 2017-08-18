@@ -1,0 +1,32 @@
+﻿
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center well">
+                    <h1>Revision Postulante</h1>
+                    <p class="lead">
+                        recordar: al dar comienzo a la revision , es un paso a considerar al momento
+                        de gestionar a los postulantes , otorgandoles un grado de interes a este
+                        mismo , e influira en los filtros de busqueda.
+                    </p>
+@using (Html.BeginForm("activa_revision_postulante", "control_postulacion", FormMethod.Post, new { @id = "form2" }))
+{
+    @Html.Hidden("id_oferta", (Int32)ViewBag.id_oferta)
+    @Html.Hidden("id_persona", (Int32)ViewBag.id_persona)
+    
+                    <div class="checkbox">
+                        <label>
+                            
+                                @Html.CheckBox("si_correo", true, new { id = "si_correo", name = "si_correo" })Recuerde:&nbsp; se enviara un correo al postulante indicando que se revisara su postulacion.
+                          
+                          
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-info btn-lg">Comenzar Revision</button>
+}
+                </div>
+            </div>
+        </div>
+
+
+
+ 

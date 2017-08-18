@@ -1,0 +1,76 @@
+﻿
+
+@using (Html.BeginForm("duplicar_oferta", "ofertas_main", FormMethod.Post, new { @id = "formulario" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true)
+
+    @Html.Hidden("id_oferta", (Int32)ViewBag.id_oferta_dupli)
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well text-center">
+                <h2>Duplicar oferta</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                       se creara nueva oferta utilizando los mismos valores de
+                    </li>
+                    <li class="list-group-item">
+                   primera oferta cod.ref = 0
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                          
+                                <input type="submit" value="Duplicar" class="btn btn-block btn-primary" />
+                            
+                           
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<script type="text/javascript">
+
+    $("#formulario").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response != null && response.success) {
+                    alert(response.responseText);
+                
+                    window.location.replace('/ofertas_main/Detalle/' + @ViewBag.id_oferta_dupli);
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (response) {
+                alert("error!");  //
+            }
+
+
+
+
+        });
+
+    });
+
+
+</script>

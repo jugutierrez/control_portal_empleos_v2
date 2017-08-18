@@ -1,0 +1,121 @@
+﻿@model control_portal_empleos_v2.Models.usuarios
+
+@using (Html.BeginForm("update_foto", "control_cuenta", FormMethod.Post, new { id = "my-form", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1 class="text-center">Foto de Perfil &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</h1>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.id_usuario, new { id = "id_usuario", name = "id_usuario" })
+
+    <div class="row">
+        <div class="col-md-4">
+@if (Model != null)
+{
+            if (Model.foto_usuario != null)
+            {
+                <img src="data:image/png;base64,@Convert.ToBase64String(Model.foto_usuario, 0, Model.foto_usuario.Length)"
+                     class="center-block img-responsive img-thumbnail" name="preview" id="preview">
+            }
+            else
+            {
+                <img src="http://www.sanitas.cl/wp-content/uploads/2015/07/sin.jpg"
+                     class="center-block img-responsive img-thumbnail" name="preview" id="preview">
+            }
+}
+else
+{
+    <img src="http://www.sanitas.cl/wp-content/uploads/2015/07/sin.jpg"
+         class="center-block img-responsive img-thumbnail" name="preview" id="preview">
+}
+
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                @Html.LabelFor(model => model.foto_usuario, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.file, new
+               {
+                   id = "file",
+                   name = "file",
+                   type = "File",
+                   accept = "image/x-png, image/gif, image/jpeg",
+                   onchange = "document.getElementById('preview').src = window.URL.createObjectURL(this.files[0]) "
+               })
+                    @Html.ValidationMessageFor(model => model.file)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group clearfix">
+                <div class="pull-right ">
+                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
+
+                    <button type="button" class="btn btn-lg btn-warning" value="Actualizar" id="upload">
+
+                        <i class="fa fa-fw fa-spin fa-star"></i>Guardar
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+
+    $('#upload').on('click', function (e) {
+        var fileform = document.getElementById('file');
+        var id = document.getElementById('id_usuario');
+        var files = fileform.files;
+        var text = $('#id_usuario').val();
+        if (files.length > 0) {
+            var data = new FormData();
+            data.append("file", files[0]);
+            data.append("id_usuario", text);
+
+
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("update_foto","control_cuenta")',
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (response) {
+                    if (response != null && response.success) {
+                        alert(response.responseText);
+
+                       
+                        window.location.reload();
+                        
+
+                    } else {
+                        // DoSomethingElse()
+                        alert(response.responseText);
+                    }
+                },
+                error: function (response) {
+                    alert("error!");  //
+                }
+            });
+        }
+    });
+
+
+</script>
+

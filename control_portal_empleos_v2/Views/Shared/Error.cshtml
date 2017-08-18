@@ -1,0 +1,32 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error En el Sistema";
+
+}
+<div class="section">
+    <div class="container">
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center well">
+                    <h1 class="text-danger">ha Ocurrido un imprevisto</h1>
+                    <h1 class="text-danger">
+                        Codigo:
+                        <br>
+                    <span class="text-danger">@ViewBag.codigo</span>    
+                        <br>
+                    </h1>
+                    <h1 class="text-danger">
+                        Favor reporte al encargado el codigo desplegado&nbsp;
+                        <br>
+                    </h1>
+                    <a class="btn btn-block btn-info btn-lg">VOLVER AL INICIO</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+﻿@model control_portal_empleos_v2.Models.super_modelo_curriculum
+<ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill"  href="#inicio">Estado del Postulante</a></li>
+    <li><a data-toggle="pill" href="#menu">Curriculum Postulante</a></li>
+@if (ViewBag.activado != 0)
+{
+    <li><a data-toggle="pill" href="#menu1">Cuestionario Postulante</a></li>
+}
+    <li><a data-toggle="pill" href="#menu2">Descargar Documentos</a></li>
+    <li><a data-toggle="pill" href="#menu3">Cronologia Postulante</a></li>
+</ul>
+<hr />
+
+<div class="tab-content">
+    <div id="inicio" class="tab-pane fade in active ">
+       <div id="content" class="content" name="content">
+           
+           @if (ViewBag.id_estado_postulacion_actual == 0)
+           {
+            <div>
+                @{ Html.RenderPartial("_status_confirma_postulacion_persona");  }
+            </div>
+           }
+              @if (ViewBag.id_estado_postulacion_actual == 1)
+              {
+                <div>
+                    @{ Html.RenderPartial("_status_postulacion_persona");  }
+                </div>
+                        }
+           @if (ViewBag.id_estado_postulacion_actual == 2 || ViewBag.id_estado_postulacion_actual == 3)
+           {
+            <div>
+                @{ Html.RenderPartial("_status_final_postulacion_persona");  }
+            </div>
+           }
+
+       </div>
+       
+             
+      
+            
+        </div>
+    <div id="menu" class="tab-pane fade">
+       
+        @{ Html.RenderPartial("_formato_postulacion_pdf", Model);  }
+    </div>
+
+    @if (ViewBag.activado != 0)
+    {
+    <div id="menu1" class="tab-pane fade ">
+        @{ Html.RenderPartial("_cuestionario_postulacion_persona");  }
+    </div>
+            }
+    <div id="menu2" class="tab-pane fade text-center">
+
+        <p><h1> Seleccione el Documento a descargar.</h1></p>
+  
+       
+@if (ViewBag.activado != 0)
+{
+        <a target="_blank" href="@Url.Action("Descarga_pdf", "control_postulacion", new { id = Html.DisplayFor(model => model.persona_curriculum_vista.id_persona) , id_oferta = (Int32)ViewBag.id_oferta, nombre_persona = Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) })" class="btn btn-info btn-lg">Descargar Curriculum y Cuestionario<i class="fa fa-fw fa-download"></i></a>
+}
+else
+{
+    <a target="_blank" href="@Url.Action("Descarga_pdf", "control_postulacion", new { id = Html.DisplayFor(model => model.persona_curriculum_vista.id_persona),id_oferta = (Int32)ViewBag.id_oferta, nombre_persona = Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) })" class="btn btn-info btn-lg">Descargar Copia Curriculum<i class="fa fa-fw fa-download"></i></a>
+}
+        <hr>
+          
+        <a target="_blank" href="@Url.Action("Descarga_historial_pdf", "control_curriculums", new { id = Html.DisplayFor(model => model.persona_curriculum_vista.id_persona), nombre_persona = Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) })" class="btn btn-info btn-lg">Descargar Historial de Postulaciones<i class="fa fa-fw fa-download"></i></a>
+
+        <hr>
+
+        <a target="_blank" href="@Url.Action("Descarga_cronologia_pdf", "control_postulacion", new { id = Html.DisplayFor(model => model.persona_curriculum_vista.id_persona), nombre_persona = Html.DisplayFor(model => model.persona_curriculum_vista.nombre_persona) ,id_oferta = ViewBag.id_oferta })" class="btn btn-info btn-lg">Descargar Historial Cronologico persona<i class="fa fa-fw fa-download"></i></a>
+        <hr>
+</div>
+    <div id="menu3" class="tab-pane fade text-center">
+        @{ Html.RenderPartial("_cronologia_postulacion_persona");  }
+    </div>
+    </div>
+
+
+
+<script>
+
+    $("#form2").on("submit", function (e)
+{
+    e.preventDefault();
+
+    $.ajax({
+        url: this.action,
+        type: this.method,
+        data: $(this).serialize()
+
+    })
+    .success(function(result){
+        $('#content').html(result);
+    })
+        .error(function(xhr,status)
+        {
+            alert(status);
+        })
+
+
+    });
+
+
+</script>

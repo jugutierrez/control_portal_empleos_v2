@@ -1,0 +1,467 @@
+﻿
+ @model PagedList.IPagedList<control_portal_empleos_v2.Models.vista_buscador_oferta> 
+@using PagedList.Mvc
+@using PagedList;
+@{
+    ViewBag.Title = "mis_ofertas";
+}
+<style>
+    div.polaroid {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        text-align: center;
+    }
+</style>
+</div>
+<div class="section">
+    <div class="container">
+
+     
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header text-center">
+                        <h1>
+                            Mis Ofertas
+
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+      
+                <div class="col-md-4" id="filtros-base">
+                    <div class="well">
+                        @using (Html.BeginForm("filtrar_full", "ofertas_main", FormMethod.Post, new { @id = "my-form" }))
+
+                        {
+
+
+
+                            <div class="title-filtro">
+                                <h2>FILTROS <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Utiliza Los Filtros para realizar una busqueda mas exacta."></i></h2>
+
+                            </div>
+                    <!--TABS EDAD-->
+                            <div class="panel panel-default" id="f1">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#filtro0">
+                                    <h4 class="panel-title">
+                                        Categorias
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#filtro0">
+
+
+                                            <i class="fa fa-border fa-lg pull-right text-muted fa-angle-double-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="filtro0" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="col-sm-12 col-md-12">
+                                          @Html.DropDownList("id_categoria", (IEnumerable<SelectListItem>)ViewBag.id_categoria, "Seleccione...", new { @class = "form-control" })
+                                        </div>
+                                      
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default" >
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+                                    <h4 class="panel-title">
+                                       Tipo de Oferta
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+
+
+                                            <i class="fa fa-border fa-lg pull-right text-muted fa-angle-double-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="filtro1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="col-sm-12 col-md-12">
+                                            @Html.DropDownList("id_tipo_oferta", (IEnumerable<SelectListItem>)ViewBag.id_tipo_oferta, "Seleccione...", new { @class = "form-control" })
+                                        </div>
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+                                    <h4 class="panel-title">
+                                        Tipo de Contrato
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+
+
+                                            <i class="fa fa-border fa-lg pull-right text-muted fa-angle-double-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="filtro1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="col-sm-12 col-md-12">
+                                            @Html.DropDownList("id_contrato_oferta", (IEnumerable<SelectListItem>)ViewBag.id_contrato_oferta, "Seleccione...", new { @class = "form-control" })
+                                        </div>
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+                                    <h4 class="panel-title">
+                                        Jornada de Trabajo
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+
+
+                                            <i class="fa fa-border fa-lg pull-right text-muted fa-angle-double-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="filtro1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="col-sm-12 col-md-12">
+                                            @Html.DropDownList("id_jornada_oferta", (IEnumerable<SelectListItem>)ViewBag.id_jornada_oferta, "Seleccione...", new { @class = "form-control" })
+                                        </div>
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+                                    <h4 class="panel-title">
+                                         monto oferta
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+
+
+                                            <i class="fa fa-border fa-lg pull-right text-muted fa-angle-double-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="filtro1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                      
+                                        <div class="col-sm-12">
+                                            <input id="monto_maximo" name="monto_maximo" type="text" placeholder="Hasta" class="form-control" onkeypress="return soloNumeros(event)" maxlength="8" value="@ViewBag.filtros6">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+                                    <h4 class="panel-title">
+                                      Oficina
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+
+
+                                            <i class="fa fa-border fa-lg pull-right text-muted fa-angle-double-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="filtro1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label" for="exampleInputPassword1">Direccion</label>@Html.DropDownList("id_direccion", null, "Seleccione...",
+                new { @class = "form-control" })
+                                            </div>
+                         
+
+
+
+                                        </div>
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label" for="exampleInputPassword1">Departamento</label>@Html.DropDownList("id_departamento", null, "Seleccione...",
+                new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label" for="exampleInputPassword1">area</label>@Html.DropDownList("id_area", null, "Seleccione...", new
+                                                                                                                {
+                                                                                                                    @class = "form-control",
+                                                                                                                    @readonly = "readonly"
+                                                                                                                })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                       
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+                                    <h4 class="panel-title">
+                                    ultima actualizacion
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#filtro1">
+
+
+                                            <i class="fa fa-border fa-lg pull-right text-muted fa-angle-double-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="filtro1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        
+                                        <div class="col-sm-12">
+                                            <select class="form-control" id="ultimo_update" name="ultimo_update">
+                                                <option value="">Seleccione</option>
+                                                <option value="15">Menor a 15 días</option>
+                                                <option value="30">Menor a 1 mes</option>
+                                                <option value="90">Menor a 3 meses</option>
+                                                <option value="180">Menor a 6 meses</option>
+                                                <option value="999999">Mas de 6 meses</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="well">
+
+                               
+
+
+                                    <button type="submit" class="btn btn-lg btn-block btn-info">
+                                        Realizar Busqueda 
+                                        <i class="fa fa-fw fa-lg fa-search"></i>
+                                    </button>
+                              
+                            </div>
+                        }
+                    </div>
+
+                </div>
+
+                <div class="col-md-8">
+                    
+                    <div class="row">
+                        <div class="well">
+                            <div class="btn-toolbar" role="toolbar">
+
+                                <div class="row">
+                                    @if (ViewBag.a1 != null)
+                                    {
+                                        for (int i = 0; i < ViewBag.a1.Length; i++)
+                                        {
+                                    <div class="col-xs-3">
+                                        <blockquote>
+                                            <p class="text-center text-info">
+                                                <span class="badge">@ViewBag.a1[i]</span>
+                                              
+                                              @Html.ActionLink((string)@ViewBag.a2[i],"filtrar_estado",new { id_estado_oferta_filtro = i  } )  
+                                            </p>
+                                        </blockquote>
+                                    </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <label> no se pudieron cargar las cantidades</label>
+                                    }
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-7 col-md-offset-2">
+                                        @using (Html.BeginForm("filtrar_basico", "ofertas_main", FormMethod.Get))
+                                        {
+                                           
+                                                <div class="input-group">
+                                                    <input type="text" id="palabra_clave" name="palabra_clave" class="form-control" placeholder="codigo referencial ,Palabra clave, Puesto o Estudio" value="@ViewBag.palabra_clave">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="submit"><i class="fa fa-fw fa-search"></i></button>
+                                                    </span>
+
+                                                </div>
+                           
+                                           
+                                        }
+
+                                        
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="fa fa-2x fa-question-circle" data-toggle="tooltip" data-placement="right" title="Mediante el filtro Simple , podra buscar ofertas que contengan una palabra clave u codigo en especial."></i>
+                                    </div>
+                                    </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="well clearfix">
+                            @if (Model == null || Model.Count() == 0)
+                            {        <h2> <label> NO SE ENCONTRARON RESULTADOS</label></h2>
+                            }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+
+
+                                    <div class="col-md-6">
+
+                                        <div class="card polaroid ">
+
+                                            <div class="bg-info card-block clearfix">
+
+
+
+
+                                                <div class="btn-group btn-group-lg pull-right">
+                                                    <a class="btn btn-info dropdown-toggle " data-toggle="dropdown"> <i class="fa fa-fw fa-gear fa-lg fa-spin"></i></a>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li>
+                                                            <a target="_blank" href="@Url.Action("Detalle", "ofertas_main", new { id = item.id_oferta })" class="btn btn-info btn-lg">Detalles de la oferta<i class="fa fa-fw fa-eye"></i></a>
+@if ((bool)ViewBag.ver_postulantes == true)
+{
+                                                            <a target="_blank" href="@Url.Action("index", "control_postulacion", new { id = @Html.DisplayFor(model => item.id_oferta) })" class="btn btn-info btn-lg">Ver Postulados<i class="fa fa-fw fa-group"></i></a>
+}
+@if ((bool)ViewBag.re_publicar_ofertas == true)
+{
+                                                            <a data-toggle="modal" data-target="#mdsoporte" id="btn2" class="btn2 btn btn-info btn-lg" data-url="/ofertas_main/vista_duplicar_oferta/@Html.DisplayFor(model => item.id_oferta)">Duplicar oferta<i class="fa fa-fw fa-copy"></i></a>
+}
+                                                            <a target="_blank" href="@Url.Action("descarga_resumen_oferta_pdf", "ofertas_main", new { id = @Html.DisplayFor(model => item.id_oferta) , nombre_oferta = @Html.DisplayFor(model => item.nombre_oferta) })" class="btn btn-info btn-lg">Descargar Copia Oferta<i class="fa fa-fw fa-download"></i></a>
+                                                              
+                                                           
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                                <h1 class="card-title"><a href="@Url.Action("Detalle", "ofertas_main", new { id = item.id_oferta })">@Html.DisplayFor(modelItem => item.nombre_oferta)</a></h1>
+                                                <h5> ( codigo referencial: @Html.DisplayFor(modelItem => item.id_oferta) )</h5>
+                                            </div>
+                                            <ul class="list-group list-group-flush ">
+                                                @if ( item.id_oferta == 0)
+                                                {
+                                                <li class="list-group-item success">Estado:  @Html.DisplayFor(modelItem => item.nombre_estado_oferta)</li>
+                                                }
+                                               else if (item.id_oferta == 1)
+                                                {
+
+                                                <li class="list-group-item">Estado:  @Html.DisplayFor(modelItem => item.nombre_estado_oferta)</li>
+                                                }
+                                                else if (item.id_oferta == 2)
+                                                {
+                                                    <li class="list-group-item">Estado:  @Html.DisplayFor(modelItem => item.nombre_estado_oferta)</li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="list-group-item danger">Estado:  @Html.DisplayFor(modelItem => item.nombre_estado_oferta)</li>
+                                                }
+                                                <li class="list-group-item">Iniciada: @Html.DisplayFor(modelItem => item.fecha_creacion_oferta)</li>
+                                        
+                                               
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+                                }
+                            }
+                        </div>
+                        @if (Model.PageCount > 1)
+            {
+
+
+                            @Html.PagedListPager(Model, page => Url.Action(ViewBag.control,
+                           new
+                           {
+                               page = page,
+                               id_categoria = ViewBag.filtros1,
+                               id_tipo_oferta = ViewBag.filtros2,
+                               id_contrato_oferta = ViewBag.filtros3,
+                               id_jornada_oferta = ViewBag.filtros4,
+                            
+                               monto_maximo = ViewBag.filtros5,
+                               id_direccion = ViewBag.filtros6,
+                               id_departamento = ViewBag.filtros7,
+                               id_area = ViewBag.filtros8,                        
+                               ultimo_update = ViewBag.filtros9,
+                               palabra_clave = ViewBag.palabra_clave , 
+                               id_estado_oferta_filtro = ViewBag.id_estado_oferta_filtro
+                           }))
+
+
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+    <div>
+
+        <script>
+
+            function soloNumeros(e) {
+                var key = window.Event ? e.which : e.keyCode
+                return (key >= 48 && key <= 57)
+            }
+
+          
+            $(document).ready(function (e) {
+               
+
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            $(function () {
+
+
+                $('#id_direccion').change(function () {
+
+                    $('#id_departamento').empty();
+                    $('#id_departamento').append('<option selected="selected" value="">Seleccione...</option>');
+                    $('#id_departamento').attr('readonly', true);
+                    $('#id_area').empty();
+                    $('#id_area').append('<option selected="selected" value="">Seleccione...</option>');
+                    $('#id_area').attr('readonly', true);
+                    $.ajax({
+                        type: "GET",
+                        url: "/ofertas_main/GetStatesByCountryId",
+                        datatype: "Json",
+                        data: { countryId: $('#id_direccion').val() },
+                        success: function (data) {
+                            if (data != null) {
+
+                                $.each(data, function (index, value2) {
+                                    $('#id_departamento').append('<option value="' + value2.id_departamento + '">' + value2.nombre_departamento + '</option>');
+                                });
+                                $('#id_departamento').attr('readonly', false);
+                                $('#id_departamento').attr('readonly', false);
+                            }
+                        }
+                    });
+                });
+                $('#id_departamento').change(function () {
+
+                    $('#id_area').empty();
+                    $('#id_area').append('<option selected="selected" value="">Seleccione...</option>');
+                    $('#id_area').attr('readonly', true);
+                    $.ajax({
+                        type: "GET",
+                        url: "/ofertas_main/GetStatesByCountryId2",
+                        datatype: "Json",
+                        data: { countryId: $('#id_departamento').val() },
+                        success: function (data) {
+                            if (data != null) {
+                                $.each(data, function (index, value2) {
+                                    $('#id_area').append('<option value="' + value2.id_area + '">' + value2.nombre_area + '</option>');
+                                });
+                                $('#id_area').attr('readonly', false);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
